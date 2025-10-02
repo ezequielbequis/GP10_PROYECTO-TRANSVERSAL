@@ -3,16 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package entidades;
-
-
 /**
  *
- * @author alejo
+ * @author Grupo10 
+ * Altamirano Karina
+ * Gianfranco Antonacci Matías
+ * Bequis Marcos Ezequiel
+ * Dave  Natalia
+ * Quiroga Dorzan Alejo
  */
-   
-
 public class Inscripcion {
-    private int idInscripto;
+    private int idInscripto = -1;
     private int nota;
     private Alumno alumno;
     private Materia materia;
