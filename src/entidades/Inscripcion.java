@@ -4,14 +4,12 @@
  */
 package entidades;
 
-<<<<<<< Updated upstream
+
 /**
  *
  * @author alejo
  */
-public class Inscripcion {
-    
-=======
+   
 
 public class Inscripcion {
     private int idInscripto;
@@ -57,5 +55,5 @@ public class Inscripcion {
                 ", materia=" + materia + 
                 '}';
     }
->>>>>>> Stashed changes
+
 }
