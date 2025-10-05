@@ -3,8 +3,12 @@ package entidades;
 import java.time.LocalDate;
 
 /**
- *
- * @author matia
+ * @author Grupo10 
+ * Altamirano Karina
+ * Gianfranco Antonacci Matías
+ * Bequis Marcos Ezequiel
+ * Dave  Natalia
+ * Quiroga Dorzan Alejo
  */
 public class Alumno {
     private int idAlumno = -1;
@@ -13,7 +17,10 @@ public class Alumno {
     private String nombre;
     private LocalDate fechaNac;
     private boolean estado;
-
+    
+    //Constructores
+    public Alumno() {}
+    
     public Alumno(int dni, String apellido, String nombre, LocalDate fechaNac, boolean estado) {
         this.dni = dni;
         this.apellido = apellido;
@@ -21,7 +28,18 @@ public class Alumno {
         this.fechaNac = fechaNac;
         this.estado = estado;
     }
-
+    
+    public Alumno(int idAlumno, int dni, String apellido, String nombre, LocalDate fechaNac, boolean estado) {
+        this.idAlumno = idAlumno;
+        this.dni = dni;
+        this.apellido = apellido;
+        this.nombre = nombre;
+        this.fechaNac = fechaNac;
+        this.estado = estado;
+    }
+    
+    
+    //Getters and Setters
     public int getIdAlumno() {
         return idAlumno;
     }

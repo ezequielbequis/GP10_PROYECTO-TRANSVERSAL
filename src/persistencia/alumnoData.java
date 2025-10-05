@@ -4,10 +4,21 @@
  */
 package persistencia;
 
+import java.sql.Connection;
+
 /**
- *
- * @author matia
+ * @author Grupo10 
+ * Altamirano Karina
+ * Gianfranco Antonacci Matías
+ * Bequis Marcos Ezequiel
+ * Dave  Natalia
+ * Quiroga Dorzan Alejo
  */
 public class alumnoData {
+    private Connection con = null;
+    
+    public alumnoData() {
+        //con = miConexion.buscarConexion();
+    }
     
 }

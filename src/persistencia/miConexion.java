@@ -5,8 +5,12 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author matia
+ * @author Grupo10 
+ * Altamirano Karina
+ * Gianfranco Antonacci Matías
+ * Bequis Marcos Ezequiel
+ * Dave  Natalia
+ * Quiroga Dorzan Alejo
  */
 public class miConexion {
     private String url;

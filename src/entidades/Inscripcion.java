@@ -4,7 +4,6 @@
  */
 package entidades;
 /**
- *
  * @author Grupo10 
  * Altamirano Karina
  * Gianfranco Antonacci Matías
