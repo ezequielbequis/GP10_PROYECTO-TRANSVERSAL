@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package persistencia;
+
 import entidades.Alumno;
 import java.sql.Connection;
 import java.sql.Date;
@@ -29,14 +30,16 @@ public class alumnoData {
 
     public void guardarAlumno(Alumno a) {
 
-        String query = "INSERT INTO alumno(nombre, fecNac, activo) VALUES (?,?,?)";   
+        String query = "INSERT INTO alumno(dni, apellido, nombre, fechaNacimiento, estado) VALUES (?,?,?,?,?)";
 
         try {
-            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
-            ps.setString(1, a.getNombre());
-            ps.setDate(2, Date.valueOf(a.getFechaNac()));
-            ps.setBoolean(3, a.isEstado());
-            ps.executeUpdate();   
+            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, a.getDni());
+            ps.setString(2, a.getApellido());
+            ps.setString(3, a.getNombre());
+            ps.setDate(4, Date.valueOf(a.getFechaNac()));
+            ps.setBoolean(5, a.isEstado());
+            ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
@@ -47,11 +50,8 @@ public class alumnoData {
             ps.close();
             System.out.println("Guardado");
         } catch (SQLException ex) {
-
             Logger.getLogger(alumnoData.class.getName()).log(Level.SEVERE, null, ex);
-
         }
-
     }
 
     public void actualizarAlumno(Alumno a) {
