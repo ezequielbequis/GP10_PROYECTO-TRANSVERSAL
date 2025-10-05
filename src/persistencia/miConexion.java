@@ -2,6 +2,7 @@ package persistencia;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,8 +28,10 @@ public class miConexion {
             try {
                 Class.forName("org.mariadb.jdbc.Driver");
                 conexion = DriverManager.getConnection(url,user,password);
-            } catch (SQLException | ClassNotFoundException ex) {
-                System.out.println("No se conecto a la Base de datos o no sepuede cargar el Driver.");
+            } catch (ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "No se pudo cargar el driver: \n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "No se pudo conectar con la base de datos: \n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         return conexion;
