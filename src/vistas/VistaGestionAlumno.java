@@ -36,11 +36,11 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setClosable(true);
         setIconifiable(true);
@@ -74,11 +74,11 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
         escritorioInterno.setLayer(jTextField2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorioInterno.setLayer(jTextField3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorioInterno.setLayer(jTextField4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        escritorioInterno.setLayer(jDateChooser1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorioInterno.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorioInterno.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorioInterno.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorioInterno.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        escritorioInterno.setLayer(jDateChooser1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout escritorioInternoLayout = new javax.swing.GroupLayout(escritorioInterno);
         escritorioInterno.setLayout(escritorioInternoLayout);
@@ -103,14 +103,14 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                             .addComponent(jTextField2)
                             .addComponent(jTextField3)
                             .addComponent(jTextField4)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(jButton1)))
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
         escritorioInternoLayout.setVerticalGroup(
             escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,10 +137,10 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(24, 24, 24)
-                .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
