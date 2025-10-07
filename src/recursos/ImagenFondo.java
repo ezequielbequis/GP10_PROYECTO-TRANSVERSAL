@@ -1,4 +1,4 @@
-package img;
+package recursos;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -10,7 +10,7 @@ public class ImagenFondo extends JDesktopPane {
 
     public ImagenFondo() {
         // Carga la imagen desde la carpeta "img" (dentro de Source Packages)
-        imagen = new ImageIcon(getClass().getResource("/img/windowsXP.jpg")).getImage();
+        imagen = new ImageIcon(getClass().getResource("/recursos/Fondo_ULP.jpg")).getImage();
     }
 
     @Override
