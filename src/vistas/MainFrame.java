@@ -32,10 +32,22 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
         Escritorio = new recursos.ImagenFondo();
         barra_menu = new javax.swing.JMenuBar();
-        jm_administracion = new javax.swing.JMenu();
-        jm_consultas = new javax.swing.JMenu();
+        jm_archivos = new javax.swing.JMenu();
+        jm_alumnos = new javax.swing.JMenu();
+        jmi_gestion_alumno = new javax.swing.JMenuItem();
+        jm_materias = new javax.swing.JMenu();
+        jmi_gestion_materias = new javax.swing.JMenuItem();
+        jm_inscripcion = new javax.swing.JMenu();
+        jmi_gestion_inscripcion = new javax.swing.JMenuItem();
+        jm_notas = new javax.swing.JMenu();
+        jmi_gestion_notas = new javax.swing.JMenuItem();
+        jm_busquedas = new javax.swing.JMenu();
+        jmi_filtro_alumnoMateria = new javax.swing.JMenuItem();
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TP6 DeTodo S.A.");
@@ -47,18 +59,70 @@ public class MainFrame extends javax.swing.JFrame {
         Escritorio.setLayout(EscritorioLayout);
         EscritorioLayout.setHorizontalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1145, Short.MAX_VALUE)
+            .addGap(0, 1200, Short.MAX_VALUE)
         );
         EscritorioLayout.setVerticalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 609, Short.MAX_VALUE)
+            .addGap(0, 677, Short.MAX_VALUE)
         );
 
-        jm_administracion.setText("Administración");
-        barra_menu.add(jm_administracion);
+        jm_archivos.setText("Archivos");
+        barra_menu.add(jm_archivos);
 
-        jm_consultas.setText("Consultas");
-        barra_menu.add(jm_consultas);
+        jm_alumnos.setText("Alumnos");
+
+        jmi_gestion_alumno.setText("Gestion alumnos...");
+        jmi_gestion_alumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_gestion_alumnoActionPerformed(evt);
+            }
+        });
+        jm_alumnos.add(jmi_gestion_alumno);
+
+        barra_menu.add(jm_alumnos);
+
+        jm_materias.setText("Materias");
+
+        jmi_gestion_materias.setText("Gestion materias...");
+        jmi_gestion_materias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_gestion_materiasActionPerformed(evt);
+            }
+        });
+        jm_materias.add(jmi_gestion_materias);
+
+        barra_menu.add(jm_materias);
+
+        jm_inscripcion.setText("Inscipción");
+
+        jmi_gestion_inscripcion.setText("Gestion inscripción...");
+        jmi_gestion_inscripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_gestion_inscripcionActionPerformed(evt);
+            }
+        });
+        jm_inscripcion.add(jmi_gestion_inscripcion);
+
+        barra_menu.add(jm_inscripcion);
+
+        jm_notas.setText("Notas");
+
+        jmi_gestion_notas.setText("Gestion notas...");
+        jmi_gestion_notas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_gestion_notasActionPerformed(evt);
+            }
+        });
+        jm_notas.add(jmi_gestion_notas);
+
+        barra_menu.add(jm_notas);
+
+        jm_busquedas.setText("Busquedas");
+
+        jmi_filtro_alumnoMateria.setText("Filtro Alumno/Materias");
+        jm_busquedas.add(jmi_filtro_alumnoMateria);
+
+        barra_menu.add(jm_busquedas);
 
         setJMenuBar(barra_menu);
 
@@ -66,15 +130,61 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 1145, Short.MAX_VALUE)
+            .addComponent(Escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+            .addComponent(Escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    //-------------------- Ventana Gestion Alumno --------------------
+    private void jmi_gestion_alumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_gestion_alumnoActionPerformed
+        // TODO add your handling code here:
+        VistaGestionAlumno ventana = new VistaGestionAlumno();
+        Escritorio.add(ventana);
+        // Centrar la ventana en el Escritorio
+        int x = (Escritorio.getWidth() - ventana.getWidth()) / 2;
+        int y = (Escritorio.getHeight() - ventana.getHeight()) / 2;
+        ventana.setLocation(x, y);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jmi_gestion_alumnoActionPerformed
+
+    private void jmi_gestion_materiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_gestion_materiasActionPerformed
+        // TODO add your handling code here:
+        VistaGestionMaterias ventana = new VistaGestionMaterias();
+        Escritorio.add(ventana);
+        // Centrar la ventana en el Escritorio
+        int x = (Escritorio.getWidth() - ventana.getWidth()) / 2;
+        int y = (Escritorio.getHeight() - ventana.getHeight()) / 2;
+        ventana.setLocation(x, y);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jmi_gestion_materiasActionPerformed
+
+    private void jmi_gestion_inscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_gestion_inscripcionActionPerformed
+        // TODO add your handling code here:
+        VistaGestionInscripcion ventana = new VistaGestionInscripcion();
+        Escritorio.add(ventana);
+        // Centrar la ventana en el Escritorio
+        int x = (Escritorio.getWidth() - ventana.getWidth()) / 2;
+        int y = (Escritorio.getHeight() - ventana.getHeight()) / 2;
+        ventana.setLocation(x, y);
+        ventana.setVisible(true);
+        
+    }//GEN-LAST:event_jmi_gestion_inscripcionActionPerformed
+
+    private void jmi_gestion_notasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_gestion_notasActionPerformed
+        // TODO add your handling code here:
+        VistaGestionNotas ventana = new VistaGestionNotas();
+        Escritorio.add(ventana);
+        // Centrar la ventana en el Escritorio
+        int x = (Escritorio.getWidth() - ventana.getWidth()) / 2;
+        int y = (Escritorio.getHeight() - ventana.getHeight()) / 2;
+        ventana.setLocation(x, y);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jmi_gestion_notasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -114,8 +224,18 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuBar barra_menu;
-    private javax.swing.JMenu jm_administracion;
-    private javax.swing.JMenu jm_consultas;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jm_alumnos;
+    private javax.swing.JMenu jm_archivos;
+    private javax.swing.JMenu jm_busquedas;
+    private javax.swing.JMenu jm_inscripcion;
+    private javax.swing.JMenu jm_materias;
+    private javax.swing.JMenu jm_notas;
+    private javax.swing.JMenuItem jmi_filtro_alumnoMateria;
+    private javax.swing.JMenuItem jmi_gestion_alumno;
+    private javax.swing.JMenuItem jmi_gestion_inscripcion;
+    private javax.swing.JMenuItem jmi_gestion_materias;
+    private javax.swing.JMenuItem jmi_gestion_notas;
     // End of variables declaration//GEN-END:variables
 
 }

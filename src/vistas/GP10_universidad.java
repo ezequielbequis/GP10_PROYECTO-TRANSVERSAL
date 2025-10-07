@@ -31,13 +31,13 @@ public class GP10_universidad {
         if (conexion.buscarConexion() != null) {
             JOptionPane.showMessageDialog(null, "Conectado correctamente a la base de datos.", "", JOptionPane.INFORMATION_MESSAGE);
         }
-
+/*
         al.guardarAlumno(new Alumno (33465789, "Altamirano" , "Karina", LocalDate.of(1988, 6, 14), true));
         al.guardarAlumno(new Alumno(44075064, "Antonacci", "Matías", LocalDate.of(2002, 3, 15), true));
         al.guardarAlumno(new Alumno(44437768, "Bequis", "Ezequiel", LocalDate.of(2002, 12, 13), true));
         al.guardarAlumno(new Alumno(44953830, "Quiroga", "Alejo", LocalDate.of(2003, 9, 12), true));
         al.guardarAlumno(new Alumno(31092801, "Dave", "Natalia", LocalDate.of(1984, 8, 9), true));
-        
+        */
         al.mostrarAlumnos();
     }
 }
