@@ -80,7 +80,7 @@ public class Alumno {
         this.fechaNac = fechaNac;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 

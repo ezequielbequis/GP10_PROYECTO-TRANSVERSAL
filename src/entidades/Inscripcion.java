@@ -14,45 +14,67 @@ package entidades;
 public class Inscripcion {
     private int idInscripto = -1;
     private int nota;
-    private Alumno alumno;
-    private Materia materia;
+    private int idAlumno;
+    private int idMateria;
 
     // Constructores
     public Inscripcion() {}
 
-    public Inscripcion(int nota, Alumno alumno, Materia materia) {
+    public Inscripcion(int nota, int idAlumno, int idMateria) {
         this.nota = nota;
-        this.alumno = alumno;
-        this.materia = materia;
+        this.idAlumno = idAlumno;
+        this.idMateria = idMateria;
     }
 
-    public Inscripcion(int idInscripto, int nota, Alumno alumno, Materia materia) {
+    public Inscripcion(int idInscripto, int nota, int idAlumno, int idMateria) {
         this.idInscripto = idInscripto;
         this.nota = nota;
-        this.alumno = alumno;
-        this.materia = materia;
+        this.idAlumno = idAlumno;
+        this.idMateria = idMateria;
     }
 
     // Getters y Setters
-    public int getIdInscripto() { return idInscripto; }
-    public void setIdInscripto(int idInscripto) { this.idInscripto = idInscripto; }
 
-    public int getNota() { return nota; }
-    public void setNota(int nota) { this.nota = nota; }
+    public int getIdInscripto() {
+        return idInscripto;
+    }
 
-    public Alumno getAlumno() { return alumno; }
-    public void setAlumno(Alumno alumno) { this.alumno = alumno; }
+    public void setIdInscripto(int idInscripto) {
+        this.idInscripto = idInscripto;
+    }
 
-    public Materia getMateria() { return materia; }
-    public void setMateria(Materia materia) { this.materia = materia; }
+    public int getNota() {
+        return nota;
+    }
+
+    public void setNota(int nota) {
+        this.nota = nota;
+    }
+
+    public int getIdAlumno() {
+        return idAlumno;
+    }
+
+    public void setIdAlumno(int idAlumno) {
+        this.idAlumno = idAlumno;
+    }
+
+    public int getIdMateria() {
+        return idMateria;
+    }
+
+    public void setIdMateria(int idMateria) {
+        this.idMateria = idMateria;
+    }
+   
 
     @Override
     public String toString() {
         return "Inscripcion{" + 
                 "idInscripto=" + idInscripto + 
                 ", nota=" + nota + 
-                ", alumno=" + alumno + 
-                ", materia=" + materia + 
+                ", alumno=" + idAlumno + 
+                ", materia=" + idAlumno + 
                 '}';
     }
 

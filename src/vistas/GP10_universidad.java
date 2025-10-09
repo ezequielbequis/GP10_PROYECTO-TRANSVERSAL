@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import persistencia.alumnoData;
 import persistencia.miConexion;
@@ -27,17 +28,31 @@ public class GP10_universidad {
 
         conexion = new miConexion("jdbc:mariadb://localhost:3306/gp10_ulp", "root", ""); // constructor
         alumnoData al = new alumnoData(conexion);
+        //al.preCargarAlumnos();
+        /*
+        ArrayList<Alumno> x = new ArrayList<>();
+        x = al.listarAlumnos();
+        
+        for (Alumno aux : x) {
+            al.darBajaAlumno(aux.getIdAlumno());
+        }
+        
+        for (Alumno aux : x) {
+            System.out.println("----------------------------------");
+            System.out.println("ID: " + aux.getIdAlumno() + "\nDNI: " + aux.getDni() +"\nApellido y nombre: " + aux.getApellido() + " " + aux.getNombre() 
+                    + "\nFecha de nacimiento: " + aux.getFechaNac() + "\nEstado: " + aux.getEstado());
+            System.out.println("----------------------------------");
+        }*/
+        
+        Alumno aux = al.buscarAlumnoPorId(50);
+        
+        System.out.println("----------------------------------");
+            System.out.println("ID: " + aux.getIdAlumno() + "\nDNI: " + aux.getDni() +"\nApellido y nombre: " + aux.getApellido() + " " + aux.getNombre() 
+                    + "\nFecha de nacimiento: " + aux.getFechaNac() + "\nEstado: " + aux.getEstado());
+            System.out.println("----------------------------------");
 
         if (conexion.buscarConexion() != null) {
             JOptionPane.showMessageDialog(null, "Conectado correctamente a la base de datos.", "", JOptionPane.INFORMATION_MESSAGE);
         }
-/*
-        al.guardarAlumno(new Alumno (33465789, "Altamirano" , "Karina", LocalDate.of(1988, 6, 14), true));
-        al.guardarAlumno(new Alumno(44075064, "Antonacci", "Matías", LocalDate.of(2002, 3, 15), true));
-        al.guardarAlumno(new Alumno(44437768, "Bequis", "Ezequiel", LocalDate.of(2002, 12, 13), true));
-        al.guardarAlumno(new Alumno(44953830, "Quiroga", "Alejo", LocalDate.of(2003, 9, 12), true));
-        al.guardarAlumno(new Alumno(31092801, "Dave", "Natalia", LocalDate.of(1984, 8, 9), true));
-        */
-        al.mostrarAlumnos();
     }
 }
