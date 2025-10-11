@@ -5,7 +5,6 @@
 package persistencia;
 
 import entidades.Materia;
-import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.util.List;
 
 /**
  * @author Grupo10 Altamirano Karina Gianfranco Antonacci Matías Bequis Marcos
@@ -124,7 +124,7 @@ public class materiaData {
         return materia;
     }
 
-    public List<Materia> listarMaterias() {
+   public List<Materia> listarMaterias() {
 
         String sql = "SELECT idMateria, nombre, anio FROM materia WHERE estado=1";
         ArrayList<Materia> materias = new ArrayList<>();
