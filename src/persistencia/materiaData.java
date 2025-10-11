@@ -37,7 +37,7 @@ public class materiaData {
             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, materia.getIdMateria());
             ps.setString(2, materia.getNombre());
-            ps.setInt(3, anio(materia.getAnio()));
+            ps.setInt(3, materia.getAnio());
             ps.setBoolean(4, materia.isEstado());
             ps.executeUpdate();
 
@@ -55,9 +55,7 @@ public class materiaData {
         }
     }
 
-    private int anio(int anio) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+ 
 
     public void modificarMateria(Materia materia) {
 
