@@ -37,7 +37,7 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
         
         // Inicializar la conexión y alumnoData dentro del constructor
         try {
-            conexion = new miConexion("url", "usuario", "password");
+            conexion = new miConexion("jdbc:mariadb://localhost:3306/gp10_ulp", "root", "");
             aluData = new alumnoData(conexion);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + e.getMessage());
@@ -171,7 +171,7 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
             }
         });
 
-        btnNuevo.setText("Nuevo");
+        btnNuevo.setText("Limpiar");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
@@ -206,17 +206,14 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
         escritorioInternoLayout.setHorizontalGroup(
             escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioInternoLayout.createSequentialGroup()
-                .addContainerGap(207, Short.MAX_VALUE)
+                .addContainerGap(218, Short.MAX_VALUE)
                 .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel8)
                     .addComponent(jLabel6))
-                .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(escritorioInternoLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(btnMostrarTodos))
-                    .addGroup(escritorioInternoLayout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(btnEliminar)))
+                .addGap(30, 30, 30)
+                .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnMostrarTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(229, 229, 229))
             .addGroup(escritorioInternoLayout.createSequentialGroup()
                 .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,12 +242,13 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
                                     .addGroup(escritorioInternoLayout.createSequentialGroup()
                                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7)
-                                            .addComponent(btnBuscar)))
-                                    .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jcFechaNac, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtDni, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))))
+                                        .addComponent(jLabel7))
+                                    .addGroup(escritorioInternoLayout.createSequentialGroup()
+                                        .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jcFechaNac, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                            .addComponent(txtDni, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnBuscar))))
                             .addGroup(escritorioInternoLayout.createSequentialGroup()
                                 .addGap(27, 27, 27)
                                 .addComponent(chboxEstado)))))
@@ -276,13 +274,14 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
                     .addGroup(escritorioInternoLayout.createSequentialGroup()
                         .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar))
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(57, 57, 57)))
                 .addGap(7, 7, 7)
                 .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscar)))
                 .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(escritorioInternoLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -294,7 +293,7 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
                 .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chboxEstado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
                     .addComponent(btnModificar)
@@ -307,17 +306,18 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
                 .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMostrarTodos)
                     .addComponent(jLabel8))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(escritorioInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(btnEliminar)))
+                    .addComponent(btnEliminar))
+                .addGap(6, 6, 6))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorioInterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(escritorioInterno)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,6 +338,8 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
         alumnoActual = aluData.buscarAlumnoPorDni(dni);
         
         if(alumnoActual != null){
+            
+            txtId.setText(Integer.toString(alumnoActual.getIdAlumno()));
             txtApellido.setText(alumnoActual.getApellido());
             txtNombre.setText(alumnoActual.getNombre());
             chboxEstado.setSelected(alumnoActual.getEstado());
@@ -451,8 +453,7 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
             if (alumnoActual == null) {
                 JOptionPane.showMessageDialog(this, "No hay ningún alumno seleccionado para modificar.");
                 return;
-            }
-            
+            }            
             alumnoActual.setDni(dni);
             alumnoActual.setApellido(apellido);
             alumnoActual.setNombre(nombre);
@@ -462,8 +463,7 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
             aluData.actualizarAlumno(alumnoActual);
         
             JOptionPane.showMessageDialog(this, "Alumno actualizado exitosamente.");
-        
-        
+                
             limpiarCampos();
             alumnoActual = null;
         
@@ -522,7 +522,7 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
         } 
 
     }//GEN-LAST:event_btnMostrarTodosActionPerformed
-
+//------------- Boton "Eliminar" alumno -------------
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
         int filaSeleccionada = jTable1.getSelectedRow();
@@ -533,8 +533,11 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
         }
         
         int idAlumno = (Integer) jTable1.getValueAt(filaSeleccionada, 0);
-        String nombreAlumno = (String) jTable1.getValueAt(filaSeleccionada, 2);
-        String apellidoAlumno = (String) jTable1.getValueAt(filaSeleccionada, 3);
+            //System.out.println("[id: "+idAlumno+"]");
+        String nombreAlumno = (String) jTable1.getValueAt(filaSeleccionada, 1);
+            //System.out.println("[nombre: "+nombreAlumno+"]");
+        String apellidoAlumno = (String) jTable1.getValueAt(filaSeleccionada, 2);
+            //System.out.println("[apellido: "+apellidoAlumno+"]");
         
         int confirmacion = JOptionPane.showConfirmDialog(
             this, 

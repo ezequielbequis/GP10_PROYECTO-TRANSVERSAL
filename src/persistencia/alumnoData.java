@@ -40,7 +40,8 @@ public class alumnoData {
 
             while (resultado.next()) {
                 fecNac = LocalDate.parse(resultado.getString("fechaNacimiento"));
-                alum = new Alumno(resultado.getInt("idAlumno"), resultado.getInt("dni"), resultado.getString("apellido"), resultado.getString("nombre"),
+                alum = new Alumno(resultado.getInt("idAlumno"), resultado.getInt("dni"), 
+                        resultado.getString("apellido"), resultado.getString("nombre"),
                         fecNac, resultado.getBoolean("estado"));
             }
             return alum;
@@ -126,9 +127,9 @@ public class alumnoData {
         }
     }
 
-    public void actualizarAlumno(Alumno a) {
-        String query = "UPDATE alumno SET dni=? apellido=? nombre=? fechaNacimiento=?, estado=? WHERE id=?";
-
+    public void actualizarAlumno(Alumno a) {        
+        String query = "UPDATE alumno SET dni = ?, apellido = ?, nombre = ?, fechaNacimiento = ?, estado = ? WHERE idAlumno = ?";
+        //System.out.println("["+a.getDni()+"]"+a.getApellido()+"]"+a.getNombre()+"]"+a.getFechaNac()+"]"+a.getEstado()+"]"+a.getIdAlumno()+"] ");
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, a.getDni());
@@ -136,8 +137,11 @@ public class alumnoData {
             ps.setString(3, a.getNombre());
             ps.setDate(4, Date.valueOf(a.getFechaNac()));
             ps.setBoolean(5, a.getEstado());
-            ps.executeUpdate();
-
+            ps.setInt(6, a.getIdAlumno());
+            int aux = ps.executeUpdate();
+            if (aux == 0) {
+                JOptionPane.showMessageDialog(null, "El Alumno no ha modificado.");
+            }
             ps.close();
 
         } catch (SQLException ex) {
