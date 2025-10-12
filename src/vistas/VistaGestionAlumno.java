@@ -104,6 +104,11 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
         });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -133,6 +138,11 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnMostrarTodos.setText("Mostrar Todos");
+        btnMostrarTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarTodosActionPerformed(evt);
+            }
+        });
 
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Mostrar todos los alumnos ");
@@ -305,29 +315,61 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-    /*    try{
-            Integer dni = Integer.parseInt(txtDni.getText());
-            alumnoActual = aluData.buscarAlumnoPorDni(dni);
-            if(alumnoActual != null){
-                txtApellido.setText(alumnoActual.getApellido());
-                txtNombre.setText(alumnoActual.getNombre());
-                //chboxEstado.setSelected(alumnoActual.isActivo()); //Falta este método en alumnoData
-                LocalDate lc = alumnoActual.getFechaNac();
-                java.util.Date date = java.util.Date.from(lc.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            }          
-        }catch(NumberFormatException ex){
-            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI válido");
-            
+        try {
+        if(txtDni.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI para realizar la búsqueda.");
+            return;
         }
+        
+        Integer dni = Integer.parseInt(txtDni.getText());
+        //alumnoActual = aluData.buscarAlumnoPorDni(dni);
+        
+        if(alumnoActual != null){
+            txtApellido.setText(alumnoActual.getApellido());
+            txtNombre.setText(alumnoActual.getNombre());
+            chboxEstado.setSelected(alumnoActual.getEstado());
+            LocalDate lc = alumnoActual.getFechaNac();
+            java.util.Date date = java.util.Date.from(lc.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            jcFechaNac.setDate(date);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró ningún alumno con el DNI ingresado.");
+        }
+        
+        } catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI válido (solo números).");
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage());
+            e.printStackTrace();
+    }
+    
 
-    */    
+            
         
-        
-        System.out.println("");
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void chboxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chboxEstadoActionPerformed
-        // TODO add your handling code here:
+        try {
+        if (alumnoActual == null) {
+            JOptionPane.showMessageDialog(this, "No hay ningún alumno seleccionado.");
+            chboxEstado.setSelected(false); 
+            return;
+        }
+        
+        boolean nuevoEstado = chboxEstado.isSelected();
+        
+        alumnoActual.setEstado(nuevoEstado);
+        
+        //aluData.actualizarAlumno(alumnoActual);
+        
+        String mensaje = nuevoEstado ? "Alumno activado exitosamente." : "Alumno desactivado exitosamente.";
+        JOptionPane.showMessageDialog(this, mensaje);
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cambiar el estado del alumno: " + e.getMessage());
+            e.printStackTrace();
+        chboxEstado.setSelected(!chboxEstado.isSelected());
+    }		
+		
     }//GEN-LAST:event_chboxEstadoActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -417,20 +459,123 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_btnModificarActionPerformed
-    
-       
+
+    private void btnMostrarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarTodosActionPerformed
+/*
+    try {
+        ArrayList<Alumno> listaAlumnos = aluData.listarAlumnos();
+        
+        if (listaAlumnos == null || listaAlumnos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay alumnos registrados en la base de datos.");
+            return;
+        }
+        
+        String[] columnas = {"ID", "Nombre", "Apellido", "DNI", "Fecha Nacimiento", "Estado"};
+        Object[][] datos = new Object[listaAlumnos.size()][6];
+        
+        for (int i = 0; i < listaAlumnos.size(); i++) {
+            Alumno alumno = listaAlumnos.get(i);
+            datos[i][0] = alumno.getIdAlumno();
+            datos[i][1] = alumno.getNombre();
+            datos[i][2] = alumno.getApellido();
+            datos[i][3] = alumno.getDni();
+            datos[i][4] = alumno.getFechaNac().toString();
+            datos[i][5] = alumno.getEstado() ? "Activo" : "Inactivo";
+        }
+        
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(datos, columnas) {
+            
+        };
+        
+        jTable1.setModel(modelo);
+        
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTable1.setRowSelectionAllowed(true);
+        jTable1.setColumnSelectionAllowed(false);
+        
+        
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(50);  // ID
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(120);  // DNI
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(120); // Nombre
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(80); // Apellido
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(100); // Fecha
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(80);  // Estado
+        
+        JOptionPane.showMessageDialog(this, "Se cargaron " + listaAlumnos.size() + " alumnos en la tabla.");
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar los alumnos: " + e.getMessage());
+            e.printStackTrace();
+        } 
+*/
+    }//GEN-LAST:event_btnMostrarTodosActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+/*        try {
+        int filaSeleccionada = jTable1.getSelectedRow();
+        
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un alumno de la tabla para eliminar.");
+            return;
+        }
+        
+        int idAlumno = (Integer) jTable1.getValueAt(filaSeleccionada, 0);
+        String nombreAlumno = (String) jTable1.getValueAt(filaSeleccionada, 2);
+        String apellidoAlumno = (String) jTable1.getValueAt(filaSeleccionada, 3);
+        
+        int confirmacion = JOptionPane.showConfirmDialog(
+            this, 
+            "¿Está seguro que desea eliminar al alumno " + nombreAlumno + " " + apellidoAlumno + "?\n" +
+            "El estado se cambiará a INACTIVO.",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+        
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            ArrayList<Alumno> listaAlumnos = aluData.listarAlumnos();
+            Alumno alumnoAEliminar = null;
+            
+            for (Alumno alumno : listaAlumnos) {
+                if (alumno.getIdAlumno() == idAlumno) {
+                    alumnoAEliminar = alumno;
+                    break;
+                }
+            }
+            
+            if (alumnoAEliminar != null) {
+                alumnoAEliminar.setEstado(false);
+                
+                aluData.actualizarAlumno(alumnoAEliminar);
+                
+                btnMostrarTodosActionPerformed(null);
+                
+                JOptionPane.showMessageDialog(this, "Alumno eliminado exitosamente (estado cambiado a INACTIVO).");
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo encontrar el alumno seleccionado.");
+            }
+        }
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar el alumno: " + e.getMessage());
+            e.printStackTrace();     
+    }//GEN-LAST:event_btnEliminarActionPerformed
+*/    
+    }     
     
     
     public int getId() {
         return Integer.parseInt(txtId.getText());
     }
+    
+    
      private void limpiarCampos(){
         txtId.setText("");
         txtDni.setText("");
         txtApellido.setText("");
         txtNombre.setText("");
-        jcFechaNac.setDate(new Date());
-        chboxEstado.setSelected(true);
+        jcFechaNac.setDate(null);
+        chboxEstado.setSelected(false);
         
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
