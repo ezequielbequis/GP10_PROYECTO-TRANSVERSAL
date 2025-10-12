@@ -9,9 +9,11 @@ package vistas;
 import com.toedter.calendar.JDateChooser;
 import persistencia.alumnoData;
 import entidades.Alumno;
+import persistencia.miConexion;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
         
 
@@ -23,15 +25,26 @@ import javax.swing.JOptionPane;
 
 public class VistaGestionAlumno extends javax.swing.JInternalFrame {
 
-    // private alumnoData aluData = new alumnoData(); //se necesita la calse conexion para que ande
-    private Alumno alumnoActual=null;
+    private alumnoData aluData;
+    private Alumno alumnoActual = null;
+    private miConexion conexion;
     
     /**
      * Creates new form VistaGestionAlumno
      */
     public VistaGestionAlumno() {
         initComponents();
+        
+        // Inicializar la conexión y alumnoData dentro del constructor
+        try {
+            conexion = new miConexion("url", "usuario", "password");
+            aluData = new alumnoData(conexion);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -322,7 +335,7 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
         }
         
         Integer dni = Integer.parseInt(txtDni.getText());
-        //alumnoActual = aluData.buscarAlumnoPorDni(dni);
+        alumnoActual = aluData.buscarAlumnoPorDni(dni);
         
         if(alumnoActual != null){
             txtApellido.setText(alumnoActual.getApellido());
@@ -359,7 +372,7 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
         
         alumnoActual.setEstado(nuevoEstado);
         
-        //aluData.actualizarAlumno(alumnoActual);
+        aluData.actualizarAlumno(alumnoActual);
         
         String mensaje = nuevoEstado ? "Alumno activado exitosamente." : "Alumno desactivado exitosamente.";
         JOptionPane.showMessageDialog(this, mensaje);
@@ -397,7 +410,7 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
             
             if (alumnoActual== null){
                 alumnoActual=new Alumno(dni,apellido,nombre,fechaNac,estado);
-                //aluData.guardarAlumno(alumnoActual);
+                aluData.guardarAlumno(alumnoActual);
                 
             }else{
                 alumnoActual.setDni(dni);
@@ -446,7 +459,7 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
             alumnoActual.setFechaNac(fechaNac);
             alumnoActual.setEstado(estado);
 
-            // aluData.actualizarAlumno(alumnoActual);
+            aluData.actualizarAlumno(alumnoActual);
         
             JOptionPane.showMessageDialog(this, "Alumno actualizado exitosamente.");
         
@@ -461,7 +474,7 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnMostrarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarTodosActionPerformed
-/*
+
     try {
         ArrayList<Alumno> listaAlumnos = aluData.listarAlumnos();
         
@@ -507,11 +520,11 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Error al cargar los alumnos: " + e.getMessage());
             e.printStackTrace();
         } 
-*/
+
     }//GEN-LAST:event_btnMostrarTodosActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-/*        try {
+        try {
         int filaSeleccionada = jTable1.getSelectedRow();
         
         if (filaSeleccionada == -1) {
@@ -560,7 +573,7 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Error al eliminar el alumno: " + e.getMessage());
             e.printStackTrace();     
     }//GEN-LAST:event_btnEliminarActionPerformed
-*/    
+    
     }     
     
     
