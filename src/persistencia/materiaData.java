@@ -5,7 +5,6 @@
 package persistencia;
 
 import entidades.Materia;
-import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.util.List;
 
 /**
  * @author Grupo10 Altamirano Karina Gianfranco Antonacci Matías Bequis Marcos
@@ -37,7 +37,7 @@ public class materiaData {
             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, materia.getIdMateria());
             ps.setString(2, materia.getNombre());
-            ps.setInt(3, anio(materia.getAnio()));
+            ps.setInt(3, materia.getAnio());
             ps.setBoolean(4, materia.isEstado());
             ps.executeUpdate();
 
@@ -55,9 +55,7 @@ public class materiaData {
         }
     }
 
-    private int anio(int anio) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+ 
 
     public void modificarMateria(Materia materia) {
 
@@ -124,7 +122,7 @@ public class materiaData {
         return materia;
     }
 
-    public List<Materia> listarMaterias() {
+   public List<Materia> listarMaterias() {
 
         String sql = "SELECT idMateria, nombre, anio FROM materia WHERE estado=1";
         ArrayList<Materia> materias = new ArrayList<>();
