@@ -9,9 +9,7 @@ public class ControlAlumno {
     VistaGestionAlumno vistaAlumno = null;
     Alumno alumno = null;
     
-    public void mostrarAlumno() {
-        vistaAlumno.getId();
-    }
+    
     
     public void crearAlumno() {
         

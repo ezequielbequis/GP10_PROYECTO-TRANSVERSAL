@@ -14,6 +14,7 @@ import java.util.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
         
 
@@ -34,7 +35,7 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
      */
     public VistaGestionAlumno() {
         initComponents();
-        
+        calendario();
         // Inicializar la conexión y alumnoData dentro del constructor
         try {
             conexion = new miConexion("jdbc:mariadb://localhost:3306/gp10_ulp", "root", "");
@@ -580,8 +581,14 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
     }     
     
     
-    public int getId() {
-        return Integer.parseInt(txtId.getText());
+    public void calendario() {
+        Calendar calMin = Calendar.getInstance();
+        calMin.set(1925, Calendar.JANUARY, 1);
+        Date fechaMin = calMin.getTime();
+        Date fechaMax = new Date();
+        
+        jcFechaNac.setMinSelectableDate(fechaMin);
+        jcFechaNac.setMaxSelectableDate(fechaMax);
     }
     
     
@@ -592,7 +599,6 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
         txtNombre.setText("");
         jcFechaNac.setDate(null);
         chboxEstado.setSelected(false);
-        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
