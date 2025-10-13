@@ -20,25 +20,24 @@ import java.util.List;
  * @author Grupo10 Altamirano Karina Gianfranco Antonacci Matías Bequis Marcos
  * Ezequiel Dave Natalia Quiroga Dorzan Alejo
  */
-public class MateriaData {
+public class materiaData {
 
     private Connection con = null;
 
-    public MateriaData(miConexion conexion) {
+    public materiaData(miConexion conexion) {
         this.con = conexion.buscarConexion();
         //con = miConexion.buscarConexion();
     }
 
     public void guardarMateria(Materia materia) {
 
-        String query = "INSERT INTO materia(idMateria, nombre, anio, estado) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO materia(nombre, año, estado) VALUES (?,?,?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, materia.getIdMateria());
-            ps.setString(2, materia.getNombre());
-            ps.setInt(3, materia.getAnio());
-            ps.setBoolean(4, materia.isEstado());
+            ps.setString(1, materia.getNombre());
+            ps.setInt(2, materia.getAnio());
+            ps.setBoolean(3, materia.getEstado());
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
@@ -51,7 +50,7 @@ public class MateriaData {
             ps.close();
             System.out.println("Guardado");
         } catch (SQLException ex) {
-            Logger.getLogger(MateriaData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(materiaData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -59,13 +58,14 @@ public class MateriaData {
 
     public void modificarMateria(Materia materia) {
 
-        String query = "UPDATE materia SET  nombre = ?, anio = ? WHERE idMateria = ?";
+        String query = "UPDATE materia SET  nombre = ?, año = ?, estado = ? WHERE idMateria = ?";
 
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, materia.getNombre());
             ps.setInt(2, materia.getAnio());
-            ps.setInt(3, materia.getIdMateria());
+            ps.setBoolean(3, materia.getEstado());
+            ps.setInt(4, materia.getIdMateria());
 
             int exito = ps.executeUpdate();
             if (exito == 1) {
@@ -100,7 +100,7 @@ public class MateriaData {
     }
 
     public Materia buscarMateria(int id) {
-        String sql = "SELECT idMateria, nombre, anio FROM materia WHERE idMateria = ? AND estado=1";
+        String sql = "SELECT idMateria, nombre, año, estado FROM materia WHERE idMateria = ?";
         Materia materia = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -110,8 +110,8 @@ public class MateriaData {
                 materia = new Materia();
                 materia.setIdMateria(rs.getInt("idMateria"));
                 materia.setNombre(rs.getString("nombre"));
-                materia.setAnio(rs.getInt("anio"));
-                materia.setEstado(true);
+                materia.setAnio(rs.getInt("año"));
+                materia.setEstado(rs.getBoolean("estado"));
             } else {
                 JOptionPane.showMessageDialog(null, "No existe esa materia");
             }
@@ -122,21 +122,18 @@ public class MateriaData {
         return materia;
     }
 
-   public List<Materia> listarMaterias() {
+   public ArrayList listarMaterias() {
 
-        String sql = "SELECT idMateria, nombre, anio FROM materia WHERE estado=1";
+        //String sql = "SELECT idMateria, nombre, año FROM materia WHERE estado=1";
+        String sql = "SELECT * FROM materia";
         ArrayList<Materia> materias = new ArrayList<>();
+        Materia materia =null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Materia materia = new Materia();
-                materia.setIdMateria(rs.getInt("idMateria"));
-                materia.setNombre(rs.getString("nombre"));
-                materia.setAnio(rs.getInt("anio"));
-                materia.setEstado(true);
-
+                materia = new Materia(rs.getInt("idMateria"),rs.getString("nombre"),rs.getInt("año"),rs.getBoolean("estado"));
                 materias.add(materia);
             }
             ps.close();

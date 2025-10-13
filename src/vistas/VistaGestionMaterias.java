@@ -5,39 +5,35 @@
 package vistas;
 
 import entidades.Materia;
-import persistencia.MateriaData;
+import java.util.ArrayList;
+import persistencia.materiaData;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
-import java.util.List;
 import persistencia.miConexion;
 
-
 public class VistaGestionMaterias extends javax.swing.JInternalFrame {
-    private MateriaData materiaData; // Solo declarada, sin = new ...
+
+    private materiaData materiaData;
     private DefaultTableModel modelo;
-    private miConexion conexion; // Declara la variable para la conexión
+    private miConexion conexion;
+
     public VistaGestionMaterias() {
         initComponents();
-        armarCabecera();
-        cargarMaterias();
-        limpiarCampos();
-           try {
-            // 1. Crear la conexión. Usa los datos que viste en VistaGestionAlumno.
-            // Asegúrate de cambiar el nombre de la BD si es diferente a 'gp10_ulp'
-            conexion = new miConexion("jdbc:mariadb://localhost:3306/gp10_ulp", "root", "tu_password"); // Si no tienes password, usa ""
-            
-            // 2. Crear MateriaData, pasándole la conexión. 
-            materiaData = new MateriaData(conexion);
-            
+        
+        try {
+            conexion = new miConexion("jdbc:mariadb://localhost:3306/gp10_ulp", "root", "");
+            materiaData = new materiaData(conexion);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + e.getMessage());
             e.printStackTrace();
-        
         }
-    
+        armarCabecera();
+        cargarMaterias();
+        limpiarCampos();
+
     }
 
-        private void armarCabecera() {
+    private void armarCabecera() {
         modelo = new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("Nombre");
@@ -45,29 +41,27 @@ public class VistaGestionMaterias extends javax.swing.JInternalFrame {
         modelo.addColumn("Estado");
         tablaMaterias.setModel(modelo);
     }
-    
-        private void cargarMaterias() {
-           modelo.setRowCount(0);
-           List<Materia> materias = materiaData.listarMaterias(); // ajusta el nombre si tu método es distinto
-           for (Materia m : materias) {
-                modelo.addRow(new Object[]{
+
+    private void cargarMaterias() {
+        modelo.setRowCount(0);
+        ArrayList<Materia> materias = materiaData.listarMaterias();
+        for (Materia m : materias) {
+            modelo.addRow(new Object[]{
                 m.getIdMateria(),
                 m.getNombre(),
-                m.getAnio(),            // o getAño() según tu nombre
-                m.isEstado() ? "Activa" : "Inactiva"
+                m.getAnio(),
+                m.getEstado() ? "Activa" : "Inactiva"
             });
         }
     }
-               private void limpiarCampos() {
-              jTextId.setText("");
-              jTextNombre.setText("");
-              jTextAnio.setText("");
-              jCheckEstado.setSelected(true);
-          }  
-        
-        
-        
-        
+
+    private void limpiarCampos() {
+        jTextId.setText("");
+        jTextNombre.setText("");
+        jTextAnio.setText("");
+        jCheckEstado.setSelected(true);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,75 +156,83 @@ public class VistaGestionMaterias extends javax.swing.JInternalFrame {
 
         jLabel5.setText("          (Seleccionar para editar o borrar)");
 
-        jCheckEstado.setSelected(true);
-        jCheckEstado.setText("jCheckBox1");
+        jCheckEstado.setText("Materia Activa");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCheckEstado)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextAnio)
+                                    .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(43, 43, 43)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(35, 35, 35)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnLimpiar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(69, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextId, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscar)
-                        .addGap(0, 18, Short.MAX_VALUE))
+                        .addGap(169, 169, 169))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(15, 15, 15)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextAnio)
-                        .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jCheckEstado))
-                .addGap(57, 57, 57))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(170, 170, 170))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckEstado)
-                        .addGap(4, 4, 4)
+                            .addComponent(jTextAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnGuardar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnActualizar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnLimpiar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnLimpiar)))
+                .addGap(12, 12, 12)
+                .addComponent(jCheckEstado)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel5)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -256,60 +258,60 @@ public class VistaGestionMaterias extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
-        String nombre = jTextNombre.getText();
-        int anio = Integer.parseInt(jTextAnio.getText());
-        boolean estado = jCheckEstado.isSelected();
+            String nombre = jTextNombre.getText();
+            int anio = Integer.parseInt(jTextAnio.getText());
+            boolean estado = jCheckEstado.isSelected();
 
-        Materia m = new Materia(nombre, anio, estado); // ajusta constructor si necesario
-        materiaData.guardarMateria(m); // usa tu método real
+            Materia m = new Materia(nombre, anio, estado);
+            materiaData.guardarMateria(m);
 
-        JOptionPane.showMessageDialog(this, "Materia guardada.");
-        cargarMaterias();
-        limpiarCampos();
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "El año debe ser numérico.");
-    }
-  // TODO add your handling code here:
+            JOptionPane.showMessageDialog(this, "Materia guardada.");
+            cargarMaterias();
+            limpiarCampos();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El año debe ser numérico.");
+        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
-    try {
-        int id = Integer.parseInt(jTextId.getText());
-        Materia m = materiaData.buscarMateria(id); // o buscarMateria(id) según tu clase
-        if (m != null) {
-            jTextNombre.setText(m.getNombre());
-            jTextAnio.setText(String.valueOf(m.getAnio()));
-            jCheckEstado.setSelected(m.isEstado());
-        } else {
-            JOptionPane.showMessageDialog(this, "No encontrada.");
+        try {
+            int id = Integer.parseInt(jTextId.getText());
+            Materia m = materiaData.buscarMateria(id);
+            if (m != null) {
+                jTextNombre.setText(m.getNombre());
+                jTextAnio.setText(String.valueOf(m.getAnio()));
+                jCheckEstado.setSelected(m.getEstado());
+            } else {
+                JOptionPane.showMessageDialog(this, "No encontrada.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un ID válido.");
         }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Ingrese un ID válido.");
-    }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-       try {
-        int id = Integer.parseInt(jTextId.getText());
-        String nombre = jTextNombre.getText();
-        int anio = Integer.parseInt(jTextAnio.getText());
-        boolean estado = jCheckEstado.isSelected();
+        try {
+            int id = Integer.parseInt(jTextId.getText());
+            String nombre = jTextNombre.getText();
+            int anio = Integer.parseInt(jTextAnio.getText());
+            boolean estado = jCheckEstado.isSelected();
 
-        Materia m = new Materia(id, nombre, anio, estado);
-        materiaData.modificarMateria(m); // o actualizarMateria
-        JOptionPane.showMessageDialog(this, "Actualizada.");
-        cargarMaterias();
-        limpiarCampos();
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Ingrese valores válidos.");
-    }
-   // TODO add your handling code here:
+            Materia m = new Materia(id, nombre, anio, estado);
+            materiaData.modificarMateria(m);
+            JOptionPane.showMessageDialog(this, "Actualizada.");
+            cargarMaterias();
+            limpiarCampos();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese valores válidos.");
+        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    try {
+        try {
             int id = Integer.parseInt(jTextId.getText());
             materiaData.eliminarMateria(id);
             JOptionPane.showMessageDialog(this, "Eliminada (estado inactivo).");
@@ -322,10 +324,7 @@ public class VistaGestionMaterias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-    
         limpiarCampos();
-    
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
 

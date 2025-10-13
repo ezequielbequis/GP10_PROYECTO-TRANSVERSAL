@@ -48,7 +48,7 @@ public class Materia {
         this.anio = anio;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 

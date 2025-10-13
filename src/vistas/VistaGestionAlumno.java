@@ -478,7 +478,6 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
 
     try {
         ArrayList<Alumno> listaAlumnos = aluData.listarAlumnos();
-        
         if (listaAlumnos == null || listaAlumnos.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay alumnos registrados en la base de datos.");
             return;
