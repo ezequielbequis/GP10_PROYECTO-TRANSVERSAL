@@ -20,11 +20,11 @@ import java.util.List;
  * @author Grupo10 Altamirano Karina Gianfranco Antonacci Matías Bequis Marcos
  * Ezequiel Dave Natalia Quiroga Dorzan Alejo
  */
-public class materiaData {
+public class MateriaData {
 
     private Connection con = null;
 
-    public materiaData(miConexion conexion) {
+    public MateriaData(miConexion conexion) {
         this.con = conexion.buscarConexion();
         //con = miConexion.buscarConexion();
     }
@@ -51,7 +51,7 @@ public class materiaData {
             ps.close();
             System.out.println("Guardado");
         } catch (SQLException ex) {
-            Logger.getLogger(materiaData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MateriaData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
