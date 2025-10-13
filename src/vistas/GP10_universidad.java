@@ -28,8 +28,11 @@ public class GP10_universidad {
 
         conexion = new miConexion("jdbc:mariadb://localhost:3306/gp10_ulp", "root", ""); // constructor
         alumnoData al = new alumnoData(conexion);
-        //al.preCargarAlumnos();
-        /*
+        
+        /*---------- Pruebas -------------
+        
+        al.preCargarAlumnos();
+        
         ArrayList<Alumno> x = new ArrayList<>();
         x = al.listarAlumnos();
         
@@ -42,7 +45,7 @@ public class GP10_universidad {
             System.out.println("ID: " + aux.getIdAlumno() + "\nDNI: " + aux.getDni() +"\nApellido y nombre: " + aux.getApellido() + " " + aux.getNombre() 
                     + "\nFecha de nacimiento: " + aux.getFechaNac() + "\nEstado: " + aux.getEstado());
             System.out.println("----------------------------------");
-        }*/
+        }
         
         Alumno aux = al.buscarAlumnoPorId(50);
         
@@ -50,7 +53,8 @@ public class GP10_universidad {
             System.out.println("ID: " + aux.getIdAlumno() + "\nDNI: " + aux.getDni() +"\nApellido y nombre: " + aux.getApellido() + " " + aux.getNombre() 
                     + "\nFecha de nacimiento: " + aux.getFechaNac() + "\nEstado: " + aux.getEstado());
             System.out.println("----------------------------------");
-
+        */
+        
         if (conexion.buscarConexion() != null) {
             JOptionPane.showMessageDialog(null, "Conectado correctamente a la base de datos.", "", JOptionPane.INFORMATION_MESSAGE);
         }
