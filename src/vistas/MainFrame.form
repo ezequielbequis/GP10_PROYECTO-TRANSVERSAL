@@ -25,7 +25,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_gestion_alumno">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Gestion alumnos..."/>
+                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n alumnos..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_gestion_alumnoActionPerformed"/>
@@ -40,7 +40,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_gestion_materias">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Gestion materias..."/>
+                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n materias..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_gestion_materiasActionPerformed"/>
@@ -55,7 +55,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_gestion_inscripcion">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Gestion inscripci&#xf3;n..."/>
+                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n inscripci&#xf3;n..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_gestion_inscripcionActionPerformed"/>
@@ -78,7 +78,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_gestion_notas">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Gestion notas..."/>
+                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n notas..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_gestion_notasActionPerformed"/>
@@ -88,7 +88,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jm_busquedas">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Busquedas"/>
+            <Property name="text" type="java.lang.String" value="B&#xfa;squedas"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_filtro_alumnoMateria">
@@ -103,7 +103,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="TP6 DeTodo S.A."/>
+    <Property name="title" type="java.lang.String" value="Grupo 10 Universidad"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="barra_menu"/>

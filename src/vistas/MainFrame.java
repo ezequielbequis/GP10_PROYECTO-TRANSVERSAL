@@ -51,7 +51,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("TP6 DeTodo S.A.");
+        setTitle("Grupo 10 Universidad");
 
         Escritorio.setPreferredSize(new java.awt.Dimension(1200, 700));
 
@@ -71,7 +71,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jm_alumnos.setText("Alumnos");
 
-        jmi_gestion_alumno.setText("Gestion alumnos...");
+        jmi_gestion_alumno.setText("Gestión alumnos...");
         jmi_gestion_alumno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmi_gestion_alumnoActionPerformed(evt);
@@ -83,7 +83,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jm_materias.setText("Materias");
 
-        jmi_gestion_materias.setText("Gestion materias...");
+        jmi_gestion_materias.setText("Gestión materias...");
         jmi_gestion_materias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmi_gestion_materiasActionPerformed(evt);
@@ -95,7 +95,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jm_inscripcion.setText("Inscipción");
 
-        jmi_gestion_inscripcion.setText("Gestion inscripción...");
+        jmi_gestion_inscripcion.setText("Gestión inscripción...");
         jmi_gestion_inscripcion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmi_gestion_inscripcionActionPerformed(evt);
@@ -115,7 +115,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jm_notas.setText("Notas");
 
-        jmi_gestion_notas.setText("Gestion notas...");
+        jmi_gestion_notas.setText("Gestión notas...");
         jmi_gestion_notas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmi_gestion_notasActionPerformed(evt);
@@ -125,7 +125,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         barra_menu.add(jm_notas);
 
-        jm_busquedas.setText("Busquedas");
+        jm_busquedas.setText("Búsquedas");
 
         jmi_filtro_alumnoMateria.setText("Filtro Alumno/Materias");
         jm_busquedas.add(jmi_filtro_alumnoMateria);
