@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import persistencia.alumnoData;
+import persistencia.inscripcionData;
+import persistencia.materiaData;
 import persistencia.miConexion;
 //import persistencia.ConexionS;
 
@@ -28,6 +30,8 @@ public class GP10_universidad {
 
         conexion = new miConexion("jdbc:mariadb://localhost:3306/gp10_ulp", "root", ""); // constructor
         alumnoData al = new alumnoData(conexion);
+        materiaData ma = new materiaData(conexion);
+        inscripcionData insc = new inscripcionData(conexion);
         
         /*---------- Pruebas -------------
         
@@ -54,6 +58,7 @@ public class GP10_universidad {
                     + "\nFecha de nacimiento: " + aux.getFechaNac() + "\nEstado: " + aux.getEstado());
             System.out.println("----------------------------------");
         */
+        
         
         if (conexion.buscarConexion() != null) {
             JOptionPane.showMessageDialog(null, "Conectado correctamente a la base de datos.", "", JOptionPane.INFORMATION_MESSAGE);

@@ -37,14 +37,15 @@ public class inscripcionData {
 
     public void guardarInscripcion(Inscripcion insc) {
 
-        String sql = "INSERT INTO  inscripcion (idAlumno, idMateria, nota) VALUES(?, ?,?) ";
+        String sql = "INSERT INTO  inscripcion (nota, idAlumno, idMateria) VALUES(?, ?,?) ";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            ps.setInt(1, insc.getIdAlumno());
-            ps.setInt(2, insc.getIdMateria());
-            ps.setDouble(3, insc.getNota());
+            ps.setDouble(1, insc.getNota());
+            ps.setInt(2, insc.getIdAlumno());
+            ps.setInt(3, insc.getIdMateria());
+            
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
@@ -89,8 +90,49 @@ public class inscripcionData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripción");
         }
         return cursadas;
-    
     }
     
+    public void actualizarNota(double nota, int idAlumno, int idMateria) {
+        String sql = "UPDATE inscripcion SET nota = ? WHERE idAlumno = ? and idMateria = ?";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setDouble(1, nota);
+            ps.setInt(2, idAlumno);
+            ps.setInt(3, idMateria);
+            
+            int fila = ps.executeUpdate();
+            
+            if (fila > 0) {
+                JOptionPane.showMessageDialog(null, "Nota actualizada con exito.", "", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+            ps.close();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripcion", "", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
+    public void borrarInscripcion(int idAlumno, int idMateria) {
+        String sql = "DELETE FROM inscripcion WHERE idAlumno = ? and idMateria = ?";
+        
+        try {
+            PreparedStatement ps = con.prepareCall(sql);
+            
+            ps.setInt(1, idAlumno);
+            ps.setInt(2, idMateria);
+            
+            int fila = ps.executeUpdate();
+            
+            if (fila > 0) {
+                JOptionPane.showMessageDialog(null, "Inscripcion anulada con exito.", "", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+            ps.close();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripcion", "", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }
