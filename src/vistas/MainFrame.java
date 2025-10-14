@@ -42,6 +42,7 @@ public class MainFrame extends javax.swing.JFrame {
         jmi_gestion_materias = new javax.swing.JMenuItem();
         jm_inscripcion = new javax.swing.JMenu();
         jmi_gestion_inscripcion = new javax.swing.JMenuItem();
+        jmi_listar_inscripciones = new javax.swing.JMenuItem();
         jm_notas = new javax.swing.JMenu();
         jmi_gestion_notas = new javax.swing.JMenuItem();
         jm_busquedas = new javax.swing.JMenu();
@@ -51,7 +52,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TP6 DeTodo S.A.");
-        setPreferredSize(new java.awt.Dimension(1200, 700));
 
         Escritorio.setPreferredSize(new java.awt.Dimension(1200, 700));
 
@@ -102,6 +102,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jm_inscripcion.add(jmi_gestion_inscripcion);
+
+        jmi_listar_inscripciones.setText("Listar Inscripciones");
+        jmi_listar_inscripciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_listar_inscripcionesActionPerformed(evt);
+            }
+        });
+        jm_inscripcion.add(jmi_listar_inscripciones);
 
         barra_menu.add(jm_inscripcion);
 
@@ -186,6 +194,18 @@ public class MainFrame extends javax.swing.JFrame {
         ventana.setVisible(true);
     }//GEN-LAST:event_jmi_gestion_notasActionPerformed
 
+    private void jmi_listar_inscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_listar_inscripcionesActionPerformed
+        // TODO add your handling code here:
+        VistaListarInscripciones ventana = new VistaListarInscripciones();
+        Escritorio.add(ventana);
+        // Centrar la ventana en el Escritorio
+        int x = (Escritorio.getWidth() - ventana.getWidth()) / 2;
+        int y = (Escritorio.getHeight() - ventana.getHeight()) / 2;
+        ventana.setLocation(x, y);
+        ventana.setVisible(true);
+      
+    }//GEN-LAST:event_jmi_listar_inscripcionesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -236,6 +256,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmi_gestion_inscripcion;
     private javax.swing.JMenuItem jmi_gestion_materias;
     private javax.swing.JMenuItem jmi_gestion_notas;
+    private javax.swing.JMenuItem jmi_listar_inscripciones;
     // End of variables declaration//GEN-END:variables
 
 }
