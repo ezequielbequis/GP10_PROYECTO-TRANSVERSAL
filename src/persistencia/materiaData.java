@@ -31,7 +31,7 @@ public class materiaData {
 
     public void guardarMateria(Materia materia) {
 
-        String query = "INSERT INTO materia(nombre, año, estado) VALUES (?,?,?)";
+        String query = "INSERT INTO materia(nombre, año , estado) VALUES (?,?,?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
