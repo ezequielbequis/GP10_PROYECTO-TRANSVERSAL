@@ -13,7 +13,7 @@ package entidades;
  */
 public class Inscripcion {
     private int idInscripto = -1;
-    private int nota;
+    private double nota;
     private int idAlumno;
     private int idMateria;
 
@@ -43,11 +43,11 @@ public class Inscripcion {
         this.idInscripto = idInscripto;
     }
 
-    public int getNota() {
+    public double getNota() {
         return nota;
     }
 
-    public void setNota(int nota) {
+    public void setNota(double nota) {
         this.nota = nota;
     }
 
