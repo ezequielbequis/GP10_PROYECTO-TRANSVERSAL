@@ -29,6 +29,10 @@ public class materiaData {
         //con = miConexion.buscarConexion();
     }
 
+    materiaData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public void guardarMateria(Materia materia) {
 
         String query = "INSERT INTO materia(nombre, año , estado) VALUES (?,?,?)";

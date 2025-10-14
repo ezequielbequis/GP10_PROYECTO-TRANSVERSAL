@@ -28,6 +28,10 @@ public class alumnoData {
         //con = miConexion.buscarConexion();
     }
 
+    alumnoData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public Alumno buscarAlumnoPorDni(int dni) {
         String query = "SELECT * FROM `alumno` WHERE `dni` = ?";
 
