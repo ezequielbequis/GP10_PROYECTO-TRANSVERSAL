@@ -141,10 +141,11 @@ public class materiaData {
                 materias.add(materia);
             }
             ps.close();
+            return materias;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia");
         }
-        return materias;
+        return null;
     }
 
 }

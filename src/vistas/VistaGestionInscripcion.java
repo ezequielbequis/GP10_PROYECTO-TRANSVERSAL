@@ -4,17 +4,40 @@
  */
 package vistas;
 
+import entidades.Alumno;
+import entidades.Materia;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import persistencia.alumnoData;
+import persistencia.materiaData;
+import persistencia.miConexion;
+
 /**
  *
  * @author matia
  */
 public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
 
+    Alumno alumnos;
+    alumnoData alumnoData;
+    materiaData materiaData;
+    miConexion conexion;
+    
     /**
      * Creates new form VistaGestionInscripcion
      */
     public VistaGestionInscripcion() {
         initComponents();
+        try {
+            conexion = new miConexion("jdbc:mariadb://localhost:3306/gp10_ulp", "root", "");
+            alumnoData = new alumnoData(conexion);
+            materiaData = new materiaData(conexion);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+        cargarCBAlumnos();
+        cargarCBMaterias();
     }
 
     /**
@@ -26,19 +49,83 @@ public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgInscripcionesM = new javax.swing.ButtonGroup();
+        jbInscribir = new javax.swing.JButton();
+        jbAnularInscripcion = new javax.swing.JButton();
+        jrbMateriasInscriptas = new javax.swing.JRadioButton();
+        jrbMateriasNoInscriptas = new javax.swing.JRadioButton();
+        jcbAlumnos = new javax.swing.JComboBox<>();
+        jcbMaterias = new javax.swing.JComboBox<>();
+        jlAlumnos = new javax.swing.JLabel();
+        jlMaterias = new javax.swing.JLabel();
+
         setClosable(true);
         setIconifiable(true);
+        setTitle("Gestion Inscripcion");
         setPreferredSize(new java.awt.Dimension(600, 400));
+
+        jbInscribir.setText("Inscribir");
+
+        jbAnularInscripcion.setText("Anular inscipción");
+
+        bgInscripcionesM.add(jrbMateriasInscriptas);
+        jrbMateriasInscriptas.setText("Materias insciptas.");
+
+        bgInscripcionesM.add(jrbMateriasNoInscriptas);
+        jrbMateriasNoInscriptas.setText("Materias no inscriptas.");
+
+        jlAlumnos.setText("Alumnos");
+
+        jlMaterias.setText("Materias");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 588, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(71, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jcbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbAnularInscripcion)
+                            .addComponent(jcbMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(70, 70, 70))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(jlAlumnos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jlMaterias)
+                        .addGap(155, 155, 155))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jrbMateriasInscriptas)
+                            .addComponent(jbInscribir))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jrbMateriasNoInscriptas)
+                        .addGap(150, 150, 150))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 365, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlAlumnos)
+                    .addComponent(jlMaterias))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbAnularInscripcion)
+                    .addComponent(jbInscribir))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jrbMateriasInscriptas)
+                    .addComponent(jrbMateriasNoInscriptas))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
 
         pack();
@@ -46,5 +133,38 @@ public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgInscripcionesM;
+    private javax.swing.JButton jbAnularInscripcion;
+    private javax.swing.JButton jbInscribir;
+    private javax.swing.JComboBox<String> jcbAlumnos;
+    private javax.swing.JComboBox<String> jcbMaterias;
+    private javax.swing.JLabel jlAlumnos;
+    private javax.swing.JLabel jlMaterias;
+    private javax.swing.JRadioButton jrbMateriasInscriptas;
+    private javax.swing.JRadioButton jrbMateriasNoInscriptas;
     // End of variables declaration//GEN-END:variables
+
+    //------------------- Cargar combo box alumnos -------------------
+    public void cargarCBAlumnos(){
+        jcbAlumnos.removeAllItems();
+        ArrayList<Alumno> listaAlumno = alumnoData.listarAlumnos();
+        
+        for (Alumno alumno : listaAlumno) {
+            jcbAlumnos.addItem( (alumno.getApellido()+", "+alumno.getNombre()) );
+        }
+    }
+    
+    public void cargarCBMaterias(){
+        jcbMaterias.removeAllItems();
+        try{
+            ArrayList<Materia> listaMateria = materiaData.listarMaterias();
+
+            for (Materia materia : listaMateria) {
+                jcbMaterias.addItem((materia.getNombre() + ", " + materia.getAnio()));
+            }
+        }catch(NullPointerException e){
+            System.out.println("Error:" + e.getMessage());
+        }
+        
+    }
 }
