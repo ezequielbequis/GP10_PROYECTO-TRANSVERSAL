@@ -2,6 +2,7 @@ package vistas;
 
 import entidades.Alumno;
 import entidades.Inscripcion;
+import entidades.Materia;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.Month;
@@ -60,20 +61,78 @@ public class GP10_universidad {
             System.out.println("----------------------------------");
         */
         
-        Inscripcion insc1 = new Inscripcion(6, 52, 1);
-        ArrayList<Inscripcion> LInsc = new ArrayList<>();
-        LInsc = insc.obtenerInscripcionesPorAlumno(51);
         
-        for(Inscripcion aux : LInsc) {
-            System.out.println("--------------------------------------");
-            System.out.println("ID inscripto: " + aux.getIdInscripto() + "\nNota: " + aux.getNota() + "\nID Alumno: " + aux.getIdAlumno() + "\nID Materia: " + aux.getIdMateria());
-            System.out.println("--------------------------------------");
+        /*---------- Pruebas INSCRIPCION DATA -------------
+        
+        ---------- OBTENER TODAS LAS INSCRIPCIONES -------------
+        ArrayList<Inscripcion> lista = new ArrayList<>();
+        
+        lista = insc.obtenerInscripciones();
+        
+        for (Inscripcion aux : lista) {
+            System.out.println("----------------------------------");
+            System.out.println("ID Inscripto: " + aux.getIdInscripto() + "\nNota: " + aux.getNota() + "\nidAlumno: " + aux.getIdAlumno() + "\nidMateria: " + aux.getIdMateria());
+            System.out.println("\n----------------------------------");
         }
+        */
         
-        insc.guardarInscripcion(insc1);
+        /*---------- Pruebas INSCRIPCION DATA -------------
         
-        if (conexion.buscarConexion() != null) {
-            JOptionPane.showMessageDialog(null, "Conectado correctamente a la base de datos.", "", JOptionPane.INFORMATION_MESSAGE);
+        ---------- OBTENER TODAS LAS INSCRIPCIONES DE UN ALUMNO POR ID -------------
+        ArrayList<Inscripcion> lista = new ArrayList<>();
+        
+        lista = insc.obtenerInscripcionesPorAlumno(1);
+        
+        for (Inscripcion aux : lista) {
+            System.out.println("----------------------------------");
+            System.out.println("ID Inscripto: " + aux.getIdInscripto() + "\nNota: " + aux.getNota() + "\nidAlumno: " + aux.getIdAlumno() + "\nidMateria: " + aux.getIdMateria());
+            System.out.println("\n----------------------------------");
         }
+        */
+        
+        /*---------- Pruebas INSCRIPCION DATA -------------
+        
+        ---------- OBTENER TODAS LAS MATERIAS QUE CURSA EL ALUMNO-------------
+        ArrayList<Materia> lista = new ArrayList<>();
+        
+        lista = insc.obtenerMateriasCursadas(1);
+        
+        for (Materia aux : lista) {
+            System.out.println("----------------------------------");
+            System.out.println("ID Materia: " + aux.getIdMateria() + "\nNombre: " + aux.getNombre() + "\nAño: " + aux.getAnio() + "\nEstado: " + aux.getEstado());
+            System.out.println("\n----------------------------------");
+        }
+        */
+        
+        /*---------- Pruebas INSCRIPCION DATA -------------
+        
+        ---------- OBTENER TODAS LAS MATERIAS EN LAS QUE NO ESTA EL ALUMNO -------------
+        ArrayList<Materia> lista = new ArrayList<>();
+        
+        lista = insc.obtenerMateriasNOCursadas(1);
+        
+        for (Materia aux : lista) {
+            System.out.println("----------------------------------");
+            System.out.println("ID Materia: " + aux.getIdMateria() + "\nNombre: " + aux.getNombre() + "\nAño: " + aux.getAnio() + "\nEstado: " + aux.getEstado());
+            System.out.println("\n----------------------------------");
+        }
+        */
+        
+        /*---------- Pruebas INSCRIPCION DATA -------------
+        
+        ---------- OBTENER TODOS LOS ALUMNOS POR IDMATERIA------------- */ /*
+        ArrayList<Alumno> lista = new ArrayList<>();
+        
+        lista = insc.obtenerAlumnosPorMateria(2);
+        
+        for (Alumno aux : lista) {
+            System.out.println("----------------------------------");
+            System.out.println("ID: " + aux.getIdAlumno() + "\nDNI: " + aux.getDni() +"\nApellido y nombre: " + aux.getApellido() + " " + aux.getNombre() 
+                    + "\nFecha de nacimiento: " + aux.getFechaNac() + "\nEstado: " + aux.getEstado());
+            System.out.println("----------------------------------");
+        }
+        */
+        
+
     }
 }

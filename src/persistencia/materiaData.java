@@ -26,7 +26,6 @@ public class materiaData {
 
     public materiaData(miConexion conexion) {
         this.con = conexion.buscarConexion();
-        //con = miConexion.buscarConexion();
     }
 
     materiaData() {
