@@ -31,10 +31,9 @@ public class inscripcionData {
     private alumnoData ad;
 
     public inscripcionData(miConexion conexion) {
-        this.con = conexion.buscarConexion();
-        this.md = new materiaData((miConexion) con);
-        this.ad = new alumnoData((miConexion) con);
-
+        this.con = conexion.buscarConexion();   
+        this.md  = new materiaData(conexion);  
+        this.ad  = new alumnoData(conexion);  
     }
 
     public void guardarInscripcion(Inscripcion insc) {
@@ -159,7 +158,7 @@ public class inscripcionData {
         }
     }
 
-    public List<Inscripcion> obtenerInscripcionesPorAlumno(int idAlumno) {
+    public ArrayList<Inscripcion> obtenerInscripcionesPorAlumno(int idAlumno) {
 
         ArrayList<Inscripcion> cursadas = new ArrayList<>();
 

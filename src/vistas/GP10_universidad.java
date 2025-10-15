@@ -61,6 +61,14 @@ public class GP10_universidad {
         */
         
         Inscripcion insc1 = new Inscripcion(6, 52, 1);
+        ArrayList<Inscripcion> LInsc = new ArrayList<>();
+        LInsc = insc.obtenerInscripcionesPorAlumno(51);
+        
+        for(Inscripcion aux : LInsc) {
+            System.out.println("--------------------------------------");
+            System.out.println("ID inscripto: " + aux.getIdInscripto() + "\nNota: " + aux.getNota() + "\nID Alumno: " + aux.getIdAlumno() + "\nID Materia: " + aux.getIdMateria());
+            System.out.println("--------------------------------------");
+        }
         
         insc.guardarInscripcion(insc1);
         
