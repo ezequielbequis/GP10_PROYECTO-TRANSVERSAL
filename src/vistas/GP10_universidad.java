@@ -1,6 +1,7 @@
 package vistas;
 
 import entidades.Alumno;
+import entidades.Inscripcion;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.Month;
@@ -59,6 +60,9 @@ public class GP10_universidad {
             System.out.println("----------------------------------");
         */
         
+        Inscripcion insc1 = new Inscripcion(6, 52, 1);
+        
+        insc.guardarInscripcion(insc1);
         
         if (conexion.buscarConexion() != null) {
             JOptionPane.showMessageDialog(null, "Conectado correctamente a la base de datos.", "", JOptionPane.INFORMATION_MESSAGE);
