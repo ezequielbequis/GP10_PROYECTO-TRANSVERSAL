@@ -4,18 +4,39 @@
  * and open the template in the editor.
  */
 package vistas;
+import entidades.Alumno;
+import entidades.Inscripcion;
+import entidades.Materia;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import persistencia.alumnoData;
+import persistencia.inscripcionData;
+import persistencia.materiaData;
+import persistencia.miConexion;
 
 /**
  *
  * @author usuario
  */
 public class VistaListarInscripciones extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form VistaListarInscripciones
-     */
+    private alumnoData alumnoData;
+    private inscripcionData inscripcionData;
+    private materiaData materiaData;
+    private miConexion conexion;
+    private ArrayList<Alumno> listaAlumnos;
+    
     public VistaListarInscripciones() {
         initComponents();
+        try {
+            conexion = new miConexion("jdbc:mariadb://localhost:3306/gp10_ulp", "root", "");
+            alumnoData = new alumnoData(conexion);
+            inscripcionData = new inscripcionData(conexion);
+            materiaData = new materiaData(conexion);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+        cargarAlumnos();
     }
 
     /**
@@ -27,25 +48,176 @@ public class VistaListarInscripciones extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jcbSeleccionAlumno = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+
         setClosable(true);
         setIconifiable(true);
         setPreferredSize(new java.awt.Dimension(600, 400));
+
+        jcbSeleccionAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbSeleccionAlumno.setSelectedIndex(-1);
+        jcbSeleccionAlumno.setToolTipText("");
+        jcbSeleccionAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbSeleccionAlumnoActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Seleccione el Alumno ");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Materia", "Año"
+            }
+        ));
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel2.setText("Materias inscriptas");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 598, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(226, 226, 226)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(187, 187, 187)
+                        .addComponent(jcbSeleccionAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(72, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jcbSeleccionAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jcbSeleccionAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionAlumnoActionPerformed
+        // TODO add your handling code here:
+        int indiceSeleccionado = jcbSeleccionAlumno.getSelectedIndex();
+        
+        if (indiceSeleccionado >= 0 && indiceSeleccionado < listaAlumnos.size()) {
+            Alumno alumnoSeleccionado = listaAlumnos.get(indiceSeleccionado);
+            
+            cargarMateriasDelAlumno(alumnoSeleccionado.getIdAlumno());
+        } else {
+            limpiarTabla();
+        }
+    }//GEN-LAST:event_jcbSeleccionAlumnoActionPerformed
 
+    public void cargarAlumnos() {
+        try {
+            ArrayList<Alumno> alumnosLista = alumnoData.listarAlumnos();
+            if (alumnosLista == null || alumnosLista.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No hay alumnos registrados en la base de datos.");
+                return;
+            }
+            listaAlumnos = alumnosLista;
+            
+            jcbSeleccionAlumno.removeAllItems();
+            
+            for (Alumno alumno : listaAlumnos) {
+                jcbSeleccionAlumno.addItem(alumno.getApellido() + ", " + alumno.getNombre());
+            }
+            
+            jcbSeleccionAlumno.setSelectedIndex(-1);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar los alumnos: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void cargarMateriasDelAlumno(int idAlumno) {
+        try {
+            ArrayList<Inscripcion> inscripcionesAlumno = inscripcionData.obtenerInscripcionesPorAlumno(idAlumno);
+           
+            if (inscripcionesAlumno == null || inscripcionesAlumno.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El alumno seleccionado no tiene materias inscriptas.");
+                limpiarTabla();
+                return;
+            }
+
+            String[] columnas = {"Materia", "Año"};
+            Object[][] datos = new Object[inscripcionesAlumno.size()][2];
+
+            for (int i = 0; i < inscripcionesAlumno.size(); i++) {
+                Inscripcion inscripcion = inscripcionesAlumno.get(i);
+                
+                Materia materia = materiaData.buscarMateria(inscripcion.getIdMateria());
+                
+                datos[i][0] = materia != null ? materia.getNombre() : "Materia no encontrada";
+                datos[i][1] = materia != null ? materia.getAnio() : "-";
+            }
+
+            javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(datos, columnas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false; // Hacer la tabla de solo lectura
+                }
+            };
+
+            jTable1.setModel(modelo);
+
+            jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+            jTable1.setRowSelectionAllowed(true);
+            jTable1.setColumnSelectionAllowed(false);
+
+            // Ajustar el ancho de las columnas
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(200);  
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(100);  
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar las materias del alumno: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void limpiarTabla() {
+        String[] columnas = {"Materia", "Año"};
+        Object[][] datos = new Object[0][2];
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(datos, columnas);
+        jTable1.setModel(modelo);
+    }
+  
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JComboBox<String> jcbSeleccionAlumno;
     // End of variables declaration//GEN-END:variables
 }
