@@ -19,7 +19,7 @@ public class Inscripcion {
 
     // Constructores
     public Inscripcion() {}
-
+    
     public Inscripcion(int nota, int idAlumno, int idMateria) {
         this.nota = nota;
         this.idAlumno = idAlumno;

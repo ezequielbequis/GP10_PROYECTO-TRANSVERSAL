@@ -5,10 +5,12 @@
 package vistas;
 
 import entidades.Alumno;
+import entidades.Inscripcion;
 import entidades.Materia;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import persistencia.alumnoData;
+import persistencia.inscripcionData;
 import persistencia.materiaData;
 import persistencia.miConexion;
 
@@ -19,9 +21,13 @@ import persistencia.miConexion;
 public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
 
     Alumno alumnos;
+    Materia materia;
+    Inscripcion inscipcion;
     alumnoData alumnoData;
     materiaData materiaData;
+    inscripcionData inscripcionData;
     miConexion conexion;
+    
     
     /**
      * Creates new form VistaGestionInscripcion
@@ -32,6 +38,7 @@ public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
             conexion = new miConexion("jdbc:mariadb://localhost:3306/gp10_ulp", "root", "");
             alumnoData = new alumnoData(conexion);
             materiaData = new materiaData(conexion);
+            inscripcionData = new inscripcionData(conexion);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + e.getMessage());
             e.printStackTrace();
@@ -65,8 +72,18 @@ public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
         setPreferredSize(new java.awt.Dimension(600, 400));
 
         jbInscribir.setText("Inscribir");
+        jbInscribir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbInscribirActionPerformed(evt);
+            }
+        });
 
         jbAnularInscripcion.setText("Anular inscipción");
+        jbAnularInscripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAnularInscripcionActionPerformed(evt);
+            }
+        });
 
         bgInscripcionesM.add(jrbMateriasInscriptas);
         jrbMateriasInscriptas.setText("Materias insciptas.");
@@ -131,6 +148,103 @@ public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //------------------- Boton Inscribir alumno -------------------
+    private void jbInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInscribirActionPerformed
+        // TODO add your handling code here:
+        String selectAlumno = (String)jcbAlumnos.getSelectedItem();
+        String selectMateria = (String)jcbMaterias.getSelectedItem();
+        int alumnoId = 0; int materiaId = 0;
+        
+        ArrayList<Alumno> listaAlumno = alumnoData.listarAlumnos();
+        ArrayList<Materia> listaMateria = materiaData.listarMaterias();
+        
+        //--- Asegura que haya un alumno y materia seleccionado ---
+        if(selectAlumno == null || selectMateria == null){
+            JOptionPane.showMessageDialog(null, "No se seleccionó ningún alumno o materia.");
+            return;
+        }
+        
+        //--- Revisa atravez de un foreach que coincida el alumno selecionado con el de la base de datos ---
+        for (Alumno alumno : listaAlumno) {
+            if((alumno.getApellido() + ", " + alumno.getNombre()).equals(selectAlumno)){
+                System.out.println("Alumno sleccionado.");
+                alumnoId = alumno.getIdAlumno();
+                break;
+            }
+        }
+        
+        //--- Revisa atravez de un foreach que coincida la materia selecionada con la de la base de datos ---
+        for (Materia materia : listaMateria) {
+            if((materia.getNombre()+", "+materia.getAnio()).equals(selectMateria)){
+                System.out.println("Materia sleccionada.");
+                materiaId = materia.getIdMateria();
+                break;
+            }
+        }
+        
+        //--- Lista de las materias en la que esta inscripto el alumno ---
+        ArrayList<Inscripcion> listaInscripcionesPorAlumno = inscripcionData.obtenerInscripcionesPorAlumno(alumnoId);
+        
+        //--- Revisa que el alumno no este inscripto en la materia, de lo contrario sale cartel+return ---
+        for (Inscripcion listaInscripciones : listaInscripcionesPorAlumno) {
+            System.out.println(listaInscripciones.getIdMateria());
+            if(listaInscripciones.getIdMateria() == materiaId){
+                JOptionPane.showMessageDialog(null, "El alumno ya esta inscripto en esa Materia.");
+                return;
+            }
+        }
+        
+        inscripcionData.guardarInscripcion(new Inscripcion(0,alumnoId,materiaId));
+        JOptionPane.showMessageDialog(null, "El alumno/a se inscribió con exito!");
+    }//GEN-LAST:event_jbInscribirActionPerformed
+
+    private void jbAnularInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularInscripcionActionPerformed
+        // TODO add your handling code here:
+        String selectAlumno = (String)jcbAlumnos.getSelectedItem();
+        String selectMateria = (String)jcbMaterias.getSelectedItem();
+        int alumnoId = 0; int materiaId = 0;
+        
+        ArrayList<Alumno> listaAlumno = alumnoData.listarAlumnos();
+        ArrayList<Materia> listaMateria = materiaData.listarMaterias();
+        
+        //--- Asegura que haya un alumno y materia seleccionado ---
+        if(selectAlumno == null || selectMateria == null){
+            JOptionPane.showMessageDialog(null, "No se seleccionó ningún alumno o materia.");
+            return;
+        }
+        
+        //--- Revisa atravez de un foreach que coincida el alumno selecionado con el de la base de datos ---
+        for (Alumno alumno : listaAlumno) {
+            if((alumno.getApellido() + ", " + alumno.getNombre()).equals(selectAlumno)){
+                System.out.println("Alumno sleccionado.");
+                alumnoId = alumno.getIdAlumno();
+                break;
+            }
+        }
+        
+        //--- Revisa atravez de un foreach que coincida la materia selecionada con la de la base de datos ---
+        for (Materia materia : listaMateria) {
+            if((materia.getNombre()+", "+materia.getAnio()).equals(selectMateria)){
+                System.out.println("Materia sleccionada.");
+                materiaId = materia.getIdMateria();
+                break;
+            }
+        }
+        
+        //--- Lista de las materias en la que esta inscripto el alumno ---
+        ArrayList<Inscripcion> listaInscripcionesPorAlumno = inscripcionData.obtenerInscripcionesPorAlumno(alumnoId);
+        
+        //--- Revisa que el alumno este inscripto en la materia, de lo contrario sale cartel+return ---
+        for (Inscripcion listaInscripciones : listaInscripcionesPorAlumno) {
+            System.out.println(listaInscripciones.getIdMateria());
+            if(listaInscripciones.getIdMateria() == materiaId){
+                inscripcionData.borrarInscripcion(alumnoId, materiaId);
+            }
+        }
+    }//GEN-LAST:event_jbAnularInscripcionActionPerformed
+
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgInscripcionesM;
