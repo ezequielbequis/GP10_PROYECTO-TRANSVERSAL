@@ -33,31 +33,44 @@ public class materiaData {
     }
 
     public void guardarMateria(Materia materia) {
-
-        String query = "INSERT INTO materia(nombre, año , estado) VALUES (?,?,?)";
+        String comprobacionSql = "SELECT * FROM materia WHERE nombre = ? AND año = ?";
+        String insertSql = "INSERT INTO materia(nombre, año, estado) VALUES (?,?,?)";
+        boolean existe = false;
 
         try {
-            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            // Verficacion para ver si existe una materia con el mismo nombre y años antes de cargar
+            PreparedStatement ps = con.prepareStatement(comprobacionSql);
             ps.setString(1, materia.getNombre());
             ps.setInt(2, materia.getAnio());
-            ps.setBoolean(3, materia.getEstado());
-            ps.executeUpdate();
+            ResultSet rs = ps.executeQuery();
 
-            ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                materia.setIdMateria(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Materia guardada");
-            } else {
-                System.out.println("No se pudo tener ID");
+                JOptionPane.showMessageDialog(null, "Ya existe una materia con ese nombre y año.", "Error", JOptionPane.ERROR_MESSAGE);
+                ps.close();
+                existe = true;
             }
             ps.close();
-            System.out.println("Guardado");
+
+            // En caso de no existir materia igual la cargamos
+            if (existe == false) {
+                PreparedStatement psInsert = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+                psInsert.setString(1, materia.getNombre());
+                psInsert.setInt(2, materia.getAnio());
+                psInsert.setBoolean(3, materia.getEstado());
+                psInsert.executeUpdate();
+
+                rs = psInsert.getGeneratedKeys();
+                if (rs.next()) {
+                    materia.setIdMateria(rs.getInt(1));
+                    JOptionPane.showMessageDialog(null, "Materia guardada correctamente.");
+                }
+
+                ps.close();
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(materiaData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al guardar la materia: " + ex.getMessage(), "", JOptionPane.ERROR_MESSAGE);
         }
     }
-
- 
 
     public void modificarMateria(Materia materia) {
 
@@ -125,18 +138,18 @@ public class materiaData {
         return materia;
     }
 
-   public ArrayList listarMaterias() {
+    public ArrayList listarMaterias() {
 
         //String sql = "SELECT idMateria, nombre, año FROM materia WHERE estado=1";
         String sql = "SELECT * FROM materia";
         ArrayList<Materia> materias = new ArrayList<>();
-        Materia materia =null;
+        Materia materia = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                materia = new Materia(rs.getInt("idMateria"),rs.getString("nombre"),rs.getInt("año"),rs.getBoolean("estado"));
+                materia = new Materia(rs.getInt("idMateria"), rs.getString("nombre"), rs.getInt("año"), rs.getBoolean("estado"));
                 materias.add(materia);
             }
             ps.close();

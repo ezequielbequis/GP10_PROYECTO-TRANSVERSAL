@@ -265,7 +265,6 @@ public class VistaGestionMaterias extends javax.swing.JInternalFrame {
             Materia m = new Materia(nombre, anio, estado);
             materiaData.guardarMateria(m);
 
-            JOptionPane.showMessageDialog(this, "Materia guardada.");
             cargarMaterias();
             limpiarCampos();
         } catch (NumberFormatException e) {
