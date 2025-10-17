@@ -13,6 +13,7 @@ import persistencia.alumnoData;
 import persistencia.materiaData;
 import persistencia.inscripcionData;
 import persistencia.miConexion;
+
 public class VistaGestionNotas extends javax.swing.JInternalFrame {
 
         private miConexion conexion; 
@@ -24,6 +25,7 @@ public class VistaGestionNotas extends javax.swing.JInternalFrame {
 
         public VistaGestionNotas() {
             initComponents();
+            tablaNotas.setModel(modelo);
             try {
     
         conexion = new miConexion("jdbc:mariadb://localhost:3306/gp10_ulp", "root", ""); 
@@ -32,58 +34,125 @@ public class VistaGestionNotas extends javax.swing.JInternalFrame {
         alumnoData = new alumnoData(conexion);
         inscripcionData = new inscripcionData(conexion);
         materiaData = new materiaData(conexion);
+        
+        
+        cargarAlumnos();
+        cargarMaterias();
+        armarCabeceraTabla();
+        cargarTablaNotas();
+        
+        
+     
+        tablaNotas.getColumnModel().getColumn(0).setMaxWidth(0);
+        tablaNotas.getColumnModel().getColumn(0).setMinWidth(0);
+        tablaNotas.getColumnModel().getColumn(0).setPreferredWidth(0);
 
+
+        tablaNotas.getColumnModel().getColumn(1).setMaxWidth(0);
+        tablaNotas.getColumnModel().getColumn(1).setMinWidth(0);
+        tablaNotas.getColumnModel().getColumn(1).setPreferredWidth(0);
+
+
+        tablaNotas.getColumnModel().getColumn(2).setMaxWidth(0);
+        tablaNotas.getColumnModel().getColumn(2).setMinWidth(0);
+        tablaNotas.getColumnModel().getColumn(2).setPreferredWidth(0);
     } catch (Exception e) {
 
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + e.getMessage());
     } 
-            cargarAlumnos();
-            cargarMaterias();
+            
+        }
+        public void cargarTablaNotas() { 
             armarCabeceraTabla();
+            limpiarTabla();
+
+            try {
+
+                List<Inscripcion> listaInscripciones = inscripcionData.obtenerInscripciones();
+
+                System.out.println("DEBUG: Se recuperaron " + listaInscripciones.size() + " inscripciones.");
+                for (Inscripcion insc : listaInscripciones) {
+
+
+
+                    Alumno alumno = alumnoData.buscarAlumnoPorId(insc.getIdAlumno());
+                    Materia materia = materiaData.buscarMateria(insc.getIdMateria());
+
+
+                    Object[] fila = {
+                            insc.getIdInscripto(), 
+                            insc.getIdAlumno(),      
+                            insc.getIdMateria(),    
+                            alumno.toString(),       
+                            materia.toString(),     
+                            insc.getNota()    
+
+                    };
+
+
+                    modelo.addRow(fila);
+                }
+
+            } catch (Exception ex) {
+
+                System.err.println("Error al cargar la tabla de notas: " + ex.getMessage());
+                JOptionPane.showMessageDialog(this, "Error al cargar datos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
         private void cargarAlumnos() {
-        List<Alumno> alumnos = alumnoData.listarAlumnos();
+        List<Alumno> alumnos = alumnoData.listarAlumnos(); 
+        cbAlumno.removeAllItems(); 
         for (Alumno a : alumnos) {
-            cbAlumno.addItem(a.getNombre());
-        }
+            cbAlumno.addItem(a); 
+    }
     }
         private void cargarMaterias() {
         List<Materia> materias = materiaData.listarMaterias();
         for (Materia m : materias) {
-            cbMateria.addItem(m.getNombre());
+            cbMateria.addItem(m);
         }
     }
 
-        private void limpiarTabla() {
-        modelo.setRowCount(0);
-    }
-        private void armarCabeceraTabla() {
-   
-        String[] titulos = {"Alumno", "Materia", "Nota"};
-    
-   
-        modelo = new DefaultTableModel(null, titulos) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
+       private void limpiarTabla() {
+  
+    if (modelo != null) {
         
-            return column == 2; 
-            }
-        };   
-         tablaNotas.setModel(modelo);
+        int filas = modelo.getRowCount();
+        for (int i = filas - 1; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+}
+        private void armarCabeceraTabla() {
+       if (modelo.getColumnCount() == 0) {
+        
+        // 6 Columnas en total
+        modelo.addColumn("ID Insc.");    
+        modelo.addColumn("ID Alumno");   
+        modelo.addColumn("ID Materia"); 
+        modelo.addColumn("Alumno");      
+        modelo.addColumn("Materia");     
+        modelo.addColumn("Nota");        
+    }
+        
+        
     }
 
     private void cargarInscripciones() {
         Alumno alumno = (Alumno) cbAlumno.getSelectedItem();
         List<Inscripcion> inscripciones = inscripcionData.obtenerInscripcionesPorAlumno(alumno.getIdAlumno());
         for (Inscripcion i : inscripciones) {
+            String nombreMateria = materiaData.buscarMateria(i.getIdMateria()).getNombre();
             modelo.addRow(new Object[]{
-                i.getIdMateria(),
+                i.getIdAlumno(),
+                nombreMateria,
                 i.getNota()
             });        
         }
     }
-
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -192,9 +261,9 @@ public class VistaGestionNotas extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel2)
                                 .addComponent(jLabel3))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(cbMateria, 0, 171, Short.MAX_VALUE)
-                                .addComponent(tfNota)))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cbMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfNota, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -232,46 +301,75 @@ public class VistaGestionNotas extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Alumno alumno = (Alumno) cbAlumno.getSelectedItem();
-    Materia materia = (Materia) cbMateria.getSelectedItem();
+        Materia materia = (Materia) cbMateria.getSelectedItem();
+    
+   
+    if (alumno == null || materia == null) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar un Alumno y una Materia.");
+        return;
+    }
 
-    try {
-        double nota = Double.parseDouble(tfNota.getText());
-        Inscripcion insc = new Inscripcion(nota, alumno.getIdAlumno(), materia.getIdMateria());
-        inscripcionData.guardarInscripcion(insc);
-        JOptionPane.showMessageDialog(this, "Inscripción guardada correctamente");
+    try {      
+        double nota = Double.parseDouble(tfNota.getText());   
+        Inscripcion insc = new Inscripcion(nota, alumno.getIdAlumno(), materia.getIdMateria());           
+        inscripcionData.guardarInscripcion(insc);        
+        JOptionPane.showMessageDialog(this, "Inscripción guardada correctamente");              
+        tfNota.setText("");            
         limpiarTabla();
-        cargarInscripciones();
-    } catch (NumberFormatException e) {
+        cargarTablaNotas();         
+    } catch (NumberFormatException e) {      
         JOptionPane.showMessageDialog(this, "Ingrese una nota válida (número)");
     }
+    
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
            int fila = tablaNotas.getSelectedRow();
     if (fila != -1) {
         int idAlumno = ((Alumno) cbAlumno.getSelectedItem()).getIdAlumno();
-        int idMateria = ((Double) modelo.getValueAt(fila, 0)).intValue();
-        double nota = Double.parseDouble(tfNota.getText());
-        inscripcionData.actualizarNota(nota, idAlumno, idMateria);
-        JOptionPane.showMessageDialog(this, "Nota actualizada correctamente");
-        limpiarTabla();
-        cargarInscripciones();
+        int idMateria = ((Materia) cbMateria.getSelectedItem()).getIdMateria();
+        try {
+            
+            String notaStr = tfNota.getText();
+            double nota = Double.parseDouble(notaStr); 
+            inscripcionData.actualizarNota(nota, idAlumno, idMateria); 
+            JOptionPane.showMessageDialog(this, "Nota actualizada correctamente.");
+            limpiarTabla();
+            cargarTablaNotas(); 
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "La nota ingresada no es un número válido.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+        }
     } else {
-        JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla");
+        JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla.");
     }
+
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       int fila = tablaNotas.getSelectedRow();
+  int fila = tablaNotas.getSelectedRow(); 
     if (fila != -1) {
-        int idAlumno = ((Alumno) cbAlumno.getSelectedItem()).getIdAlumno();
-        int idMateria = (int) modelo.getValueAt(fila, 0);
-        inscripcionData.borrarInscripcion(idAlumno, idMateria);
-        JOptionPane.showMessageDialog(this, "Inscripción eliminada correctamente");
-        limpiarTabla();
-        cargarInscripciones();
+        try {
+            
+            String idAlumnoStr = modelo.getValueAt(fila, 1).toString(); 
+            int idAlumno = Integer.parseInt(idAlumnoStr);
+            
+            
+            String idMateriaStr = modelo.getValueAt(fila, 2).toString(); 
+            int idMateria = Integer.parseInt(idMateriaStr);
+            
+            inscripcionData.borrarInscripcion(idAlumno, idMateria); 
+            
+            JOptionPane.showMessageDialog(this, "Inscripción eliminada correctamente.");
+            limpiarTabla();
+            cargarTablaNotas(); 
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error al obtener un ID de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "No se pudo eliminar la inscripción: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     } else {
-        JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla");
+        JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla.");
     }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -285,8 +383,8 @@ public class VistaGestionNotas extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox<String> cbAlumno;
-    private javax.swing.JComboBox<String> cbMateria;
+    private javax.swing.JComboBox<entidades.Alumno> cbAlumno;
+    private javax.swing.JComboBox<entidades.Materia> cbMateria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

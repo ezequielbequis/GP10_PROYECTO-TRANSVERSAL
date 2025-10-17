@@ -25,9 +25,7 @@ public class miConexion {
         this.user = user;
         this.password = password;
     }
-     public miConexion() {
-       
-    }
+    
     
     //Establecer y guardar la conexión.
     public Connection buscarConexion(){
@@ -35,6 +33,7 @@ public class miConexion {
             try {
                 Class.forName("org.mariadb.jdbc.Driver");
                 conexion = DriverManager.getConnection(url,user,password);
+                
             } catch (ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "No se pudo cargar el driver: \n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             } catch (SQLException ex) {

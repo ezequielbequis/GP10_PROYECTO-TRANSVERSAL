@@ -28,10 +28,7 @@ public class materiaData {
         this.con = conexion.buscarConexion();
     }
 
-    public materiaData() {
-       this.con = new miConexion().buscarConexion();
-    }
-
+   
     public void guardarMateria(Materia materia) {
         String comprobacionSql = "SELECT * FROM materia WHERE nombre = ? AND año = ?";
         String insertSql = "INSERT INTO materia(nombre, año, estado) VALUES (?,?,?)";

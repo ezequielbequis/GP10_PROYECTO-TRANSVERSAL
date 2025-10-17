@@ -57,7 +57,7 @@ public class inscripcionData {
 
             }
             ps.close();
-
+            con.commit();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripción");
         }

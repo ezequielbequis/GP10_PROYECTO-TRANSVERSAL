@@ -28,10 +28,7 @@ public class alumnoData {
         //con = miConexion.buscarConexion();
     }
 
-    public alumnoData() {
-        miConexion conexion = new miConexion();
-        this.con = conexion.buscarConexion();
-    }
+   
 
     public Alumno buscarAlumnoPorDni(int dni) {
         String query = "SELECT * FROM `alumno` WHERE `dni` = ?";
