@@ -27,8 +27,7 @@ public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
     materiaData materiaData;
     inscripcionData inscripcionData;
     miConexion conexion;
-    
-    
+
     /**
      * Creates new form VistaGestionInscripcion
      */
@@ -65,6 +64,8 @@ public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
         jcbMaterias = new javax.swing.JComboBox<>();
         jlAlumnos = new javax.swing.JLabel();
         jlMaterias = new javax.swing.JLabel();
+        jbActualizar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -95,33 +96,50 @@ public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
 
         jlMaterias.setText("Materias");
 
+        jbActualizar.setText("Actualizar");
+        jbActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbActualizarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("(Actualiza las lista de Materias)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(257, 257, 257)
+                .addComponent(jbActualizar)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(71, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jcbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbAnularInscripcion)
-                            .addComponent(jcbMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(70, 70, 70))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addComponent(jlAlumnos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jlMaterias)
-                        .addGap(155, 155, 155))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jrbMateriasInscriptas)
-                            .addComponent(jbInscribir))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jrbMateriasNoInscriptas)
-                        .addGap(150, 150, 150))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jcbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jbAnularInscripcion)
+                                .addComponent(jcbMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(70, 70, 70))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(78, 78, 78)
+                            .addComponent(jlAlumnos)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jlMaterias)
+                            .addGap(155, 155, 155))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jrbMateriasInscriptas)
+                                .addComponent(jbInscribir))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jrbMateriasNoInscriptas)
+                            .addGap(150, 150, 150)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(208, 208, 208))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,7 +160,11 @@ public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jrbMateriasInscriptas)
                     .addComponent(jrbMateriasNoInscriptas))
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jbActualizar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         pack();
@@ -151,103 +173,123 @@ public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
     //------------------- Boton Inscribir alumno -------------------
     private void jbInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInscribirActionPerformed
         // TODO add your handling code here:
-        String selectAlumno = (String)jcbAlumnos.getSelectedItem();
-        String selectMateria = (String)jcbMaterias.getSelectedItem();
-        int alumnoId = 0; int materiaId = 0;
-        
+        String selectAlumno = (String) jcbAlumnos.getSelectedItem();
+        String selectMateria = (String) jcbMaterias.getSelectedItem();
+        int alumnoId = 0;
+        int materiaId = 0;
+
         ArrayList<Alumno> listaAlumno = alumnoData.listarAlumnos();
         ArrayList<Materia> listaMateria = materiaData.listarMaterias();
-        
+
         //--- Asegura que haya un alumno y materia seleccionado ---
-        if(selectAlumno == null || selectMateria == null){
+        if (selectAlumno == null || selectMateria == null) {
             JOptionPane.showMessageDialog(null, "No se seleccionó ningún alumno o materia.");
             return;
         }
-        
+
         //--- Revisa atravez de un foreach que coincida el alumno selecionado con el de la base de datos ---
         for (Alumno alumno : listaAlumno) {
-            if((alumno.getApellido() + ", " + alumno.getNombre()).equals(selectAlumno)){
+            if ((alumno.getApellido() + ", " + alumno.getNombre()).equals(selectAlumno)) {
                 System.out.println("Alumno sleccionado.");
                 alumnoId = alumno.getIdAlumno();
                 break;
             }
         }
-        
+
         //--- Revisa atravez de un foreach que coincida la materia selecionada con la de la base de datos ---
         for (Materia materia : listaMateria) {
-            if((materia.getNombre()+", "+materia.getAnio()).equals(selectMateria)){
+            if ((materia.getNombre() + ", " + materia.getAnio()).equals(selectMateria)) {
                 System.out.println("Materia sleccionada.");
                 materiaId = materia.getIdMateria();
                 break;
             }
         }
-        
+
         //--- Lista de las materias en la que esta inscripto el alumno ---
         ArrayList<Inscripcion> listaInscripcionesPorAlumno = inscripcionData.obtenerInscripcionesPorAlumno(alumnoId);
-        
+
         //--- Revisa que el alumno no este inscripto en la materia, de lo contrario sale cartel+return ---
         for (Inscripcion listaInscripciones : listaInscripcionesPorAlumno) {
             System.out.println(listaInscripciones.getIdMateria());
-            if(listaInscripciones.getIdMateria() == materiaId){
+            if (listaInscripciones.getIdMateria() == materiaId) {
                 JOptionPane.showMessageDialog(null, "El alumno ya esta inscripto en esa Materia.");
                 return;
             }
         }
-        
-        inscripcionData.guardarInscripcion(new Inscripcion(0,alumnoId,materiaId));
+
+        inscripcionData.guardarInscripcion(new Inscripcion(0, alumnoId, materiaId));
         JOptionPane.showMessageDialog(null, "El alumno/a se inscribió con exito!");
     }//GEN-LAST:event_jbInscribirActionPerformed
 
+    //------------------- Boton Anular Inscribir alumno -------------------
     private void jbAnularInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularInscripcionActionPerformed
         // TODO add your handling code here:
-        String selectAlumno = (String)jcbAlumnos.getSelectedItem();
-        String selectMateria = (String)jcbMaterias.getSelectedItem();
-        int alumnoId = 0; int materiaId = 0;
-        
+        String selectAlumno = (String) jcbAlumnos.getSelectedItem();
+        String selectMateria = (String) jcbMaterias.getSelectedItem();
+        int alumnoId = 0;
+        int materiaId = 0;
+
         ArrayList<Alumno> listaAlumno = alumnoData.listarAlumnos();
         ArrayList<Materia> listaMateria = materiaData.listarMaterias();
-        
+
         //--- Asegura que haya un alumno y materia seleccionado ---
-        if(selectAlumno == null || selectMateria == null){
+        if (selectAlumno == null || selectMateria == null) {
             JOptionPane.showMessageDialog(null, "No se seleccionó ningún alumno o materia.");
             return;
         }
-        
+
         //--- Revisa atravez de un foreach que coincida el alumno selecionado con el de la base de datos ---
         for (Alumno alumno : listaAlumno) {
-            if((alumno.getApellido() + ", " + alumno.getNombre()).equals(selectAlumno)){
-                System.out.println("Alumno sleccionado.");
+            if ((alumno.getApellido() + ", " + alumno.getNombre()).equals(selectAlumno)) {
                 alumnoId = alumno.getIdAlumno();
                 break;
             }
         }
-        
+
         //--- Revisa atravez de un foreach que coincida la materia selecionada con la de la base de datos ---
         for (Materia materia : listaMateria) {
-            if((materia.getNombre()+", "+materia.getAnio()).equals(selectMateria)){
-                System.out.println("Materia sleccionada.");
+            if ((materia.getNombre() + ", " + materia.getAnio()).equals(selectMateria)) {
                 materiaId = materia.getIdMateria();
                 break;
             }
         }
-        
+
         //--- Lista de las materias en la que esta inscripto el alumno ---
         ArrayList<Inscripcion> listaInscripcionesPorAlumno = inscripcionData.obtenerInscripcionesPorAlumno(alumnoId);
+        ArrayList<Materia> obtenerMateriasNoCursadas = inscripcionData.obtenerMateriasNOCursadas(alumnoId);
         
+        
+
+        for (Inscripcion insc : listaInscripcionesPorAlumno) {
+            System.out.println("-- Lista Incripciones por Alumno :" + insc.getIdMateria());
+            for (Materia materia : obtenerMateriasNoCursadas) {
+                System.out.println("-- Lista Materia no cursada por Alumno :" + materia.getIdMateria());
+                if(materia.getIdMateria() != insc.getIdMateria()){
+                    JOptionPane.showMessageDialog(null, "No se puede anular una materia no cursada.");
+                    return;
+                }
+            }
+        }
+
         //--- Revisa que el alumno este inscripto en la materia, de lo contrario sale cartel+return ---
         for (Inscripcion listaInscripciones : listaInscripcionesPorAlumno) {
             System.out.println(listaInscripciones.getIdMateria());
-            if(listaInscripciones.getIdMateria() == materiaId){
+            if (listaInscripciones.getIdMateria() == materiaId) {
                 inscripcionData.borrarInscripcion(alumnoId, materiaId);
             }
         }
     }//GEN-LAST:event_jbAnularInscripcionActionPerformed
 
-    
-    
+    private void jbActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarActionPerformed
+        // TODO add your handling code here:
+        cargarCBMaterias();
+    }//GEN-LAST:event_jbActualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgInscripcionesM;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jbActualizar;
     private javax.swing.JButton jbAnularInscripcion;
     private javax.swing.JButton jbInscribir;
     private javax.swing.JComboBox<String> jcbAlumnos;
@@ -259,26 +301,100 @@ public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     //------------------- Cargar combo box alumnos -------------------
-    public void cargarCBAlumnos(){
+    public void cargarCBAlumnos() {
         jcbAlumnos.removeAllItems();
         ArrayList<Alumno> listaAlumno = alumnoData.listarAlumnos();
-        
+
         for (Alumno alumno : listaAlumno) {
-            jcbAlumnos.addItem( (alumno.getApellido()+", "+alumno.getNombre()) );
+            jcbAlumnos.addItem((alumno.getApellido() + ", " + alumno.getNombre()));
         }
     }
-    
-    public void cargarCBMaterias(){
-        jcbMaterias.removeAllItems();
-        try{
-            ArrayList<Materia> listaMateria = materiaData.listarMaterias();
 
-            for (Materia materia : listaMateria) {
-                jcbMaterias.addItem((materia.getNombre() + ", " + materia.getAnio()));
+    public void cargarCBMaterias() {
+        jcbMaterias.removeAllItems();
+
+        if (jrbMateriasNoInscriptas.isSelected()) {
+
+            String selectAlumno = (String) jcbAlumnos.getSelectedItem();
+            ArrayList<Alumno> listaAlumno = alumnoData.listarAlumnos();
+            int alumnoId = 0;
+
+            // --- Busca el alumno que coincida con la selección del combobox
+            for (Alumno alumno : listaAlumno) {
+                if ((alumno.getApellido() + ", " + alumno.getNombre()).equals(selectAlumno)) {
+                    System.out.println("Alumno sleccionado.");
+                    alumnoId = alumno.getIdAlumno();
+                    break;
+                }
             }
-        }catch(NullPointerException e){
-            System.out.println("Error:" + e.getMessage());
+
+            //-- Traemos de la base de datos --
+            //Lista de materias no inscriptas del Alumno
+            ArrayList<Materia> obtenerMateriasNoCursadas = inscripcionData.obtenerMateriasNOCursadas(alumnoId);
+            jcbMaterias.removeAllItems();
+
+            //-- Revisa una por una las materias de la base de datos con las materias no inscriptas del alumno --.
+            try {
+                ArrayList<Materia> listaMateria = materiaData.listarMaterias();
+                for (Materia insc : obtenerMateriasNoCursadas) {
+                    for (Materia materia : listaMateria) {
+                        if (materia.getIdMateria() == insc.getIdMateria()) {
+                            jcbMaterias.addItem((materia.getNombre() + ", " + materia.getAnio()));
+                            break;
+                        }
+                    }
+                }
+            } catch (NullPointerException e) {
+                System.out.println("Error:" + e.getMessage());
+            }
         }
-        
+
+        if (jrbMateriasInscriptas.isSelected()) {
+
+            String selectAlumno = (String) jcbAlumnos.getSelectedItem();
+            ArrayList<Alumno> listaAlumno = alumnoData.listarAlumnos();
+            int alumnoId = 0;
+
+            // --- Busca el alumno que coincida con la selección del combobox
+            for (Alumno alumno : listaAlumno) {
+                if ((alumno.getApellido() + ", " + alumno.getNombre()).equals(selectAlumno)) {
+                    System.out.println("Alumno sleccionado.");
+                    alumnoId = alumno.getIdAlumno();
+                    break;
+                }
+            }
+
+            //-- Traemos de la base de datos --
+            //Lista de materias inscriptas del Alumno
+            ArrayList<Inscripcion> listaInscripcionesPorAlumno = inscripcionData.obtenerInscripcionesPorAlumno(alumnoId);
+            jcbMaterias.removeAllItems();
+
+            //-- Revisa una por una las materias de la base de datos con las materias inscriptas del alumno --.
+            try {
+                ArrayList<Materia> listaMateria = materiaData.listarMaterias();
+                for (Inscripcion insc : listaInscripcionesPorAlumno) {
+                    for (Materia materia : listaMateria) {
+                        if (materia.getIdMateria() == insc.getIdMateria()) {
+                            jcbMaterias.addItem((materia.getNombre() + ", " + materia.getAnio()));
+                            break;
+                        }
+                    }
+                }
+            } catch (NullPointerException e) {
+                System.out.println("Error:" + e.getMessage());
+            }
+        }
+
+        if (!jrbMateriasInscriptas.isSelected() && !jrbMateriasNoInscriptas.isSelected()) {
+            try {
+                ArrayList<Materia> listaMateria = materiaData.listarMaterias();
+
+                for (Materia materia : listaMateria) {
+                    jcbMaterias.addItem((materia.getNombre() + ", " + materia.getAnio()));
+                }
+            } catch (NullPointerException e) {
+                System.out.println("Error:" + e.getMessage());
+            }
+        }
     }
 }
