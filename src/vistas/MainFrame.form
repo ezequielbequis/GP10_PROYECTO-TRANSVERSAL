@@ -13,11 +13,6 @@
     </Container>
     <Menu class="javax.swing.JMenuBar" name="barra_menu">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jm_archivos">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Archivos"/>
-          </Properties>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="jm_alumnos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Alumnos"/>
@@ -83,18 +78,6 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_gestion_notasActionPerformed"/>
               </Events>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jm_busquedas">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="B&#xfa;squedas"/>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jmi_filtro_alumnoMateria">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Filtro Alumno/Materias"/>
-              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>

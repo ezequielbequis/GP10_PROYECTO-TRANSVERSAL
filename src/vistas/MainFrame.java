@@ -35,7 +35,6 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         Escritorio = new recursos.ImagenFondo();
         barra_menu = new javax.swing.JMenuBar();
-        jm_archivos = new javax.swing.JMenu();
         jm_alumnos = new javax.swing.JMenu();
         jmi_gestion_alumno = new javax.swing.JMenuItem();
         jm_materias = new javax.swing.JMenu();
@@ -45,8 +44,6 @@ public class MainFrame extends javax.swing.JFrame {
         jmi_listar_inscripciones = new javax.swing.JMenuItem();
         jm_notas = new javax.swing.JMenu();
         jmi_gestion_notas = new javax.swing.JMenuItem();
-        jm_busquedas = new javax.swing.JMenu();
-        jmi_filtro_alumnoMateria = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -65,9 +62,6 @@ public class MainFrame extends javax.swing.JFrame {
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 677, Short.MAX_VALUE)
         );
-
-        jm_archivos.setText("Archivos");
-        barra_menu.add(jm_archivos);
 
         jm_alumnos.setText("Alumnos");
 
@@ -124,13 +118,6 @@ public class MainFrame extends javax.swing.JFrame {
         jm_notas.add(jmi_gestion_notas);
 
         barra_menu.add(jm_notas);
-
-        jm_busquedas.setText("Búsquedas");
-
-        jmi_filtro_alumnoMateria.setText("Filtro Alumno/Materias");
-        jm_busquedas.add(jmi_filtro_alumnoMateria);
-
-        barra_menu.add(jm_busquedas);
 
         setJMenuBar(barra_menu);
 
@@ -246,12 +233,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar barra_menu;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jm_alumnos;
-    private javax.swing.JMenu jm_archivos;
-    private javax.swing.JMenu jm_busquedas;
     private javax.swing.JMenu jm_inscripcion;
     private javax.swing.JMenu jm_materias;
     private javax.swing.JMenu jm_notas;
-    private javax.swing.JMenuItem jmi_filtro_alumnoMateria;
     private javax.swing.JMenuItem jmi_gestion_alumno;
     private javax.swing.JMenuItem jmi_gestion_inscripcion;
     private javax.swing.JMenuItem jmi_gestion_materias;
