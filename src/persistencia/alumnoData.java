@@ -28,7 +28,7 @@ public class alumnoData {
         //con = miConexion.buscarConexion();
     }
 
-    alumnoData() {
+    public alumnoData() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

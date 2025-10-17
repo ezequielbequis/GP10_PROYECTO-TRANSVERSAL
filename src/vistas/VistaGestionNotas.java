@@ -3,18 +3,71 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package vistas;
-
-/**
- *
- * @author matia
- */
+import entidades.Alumno;
+import entidades.Materia;
+import entidades.Inscripcion;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import persistencia.alumnoData;
+import persistencia.materiaData;
+import persistencia.inscripcionData;
+import persistencia.miConexion;
 public class VistaGestionNotas extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form VistaGestionNotas
-     */
-    public VistaGestionNotas() {
-        initComponents();
+        private alumnoData alumnoData = new alumnoData();
+        private materiaData materiaData = new materiaData();
+        private miConexion miconexion = new miConexion();
+        private inscripcionData inscripcionData = new inscripcionData(miconexion);
+        private DefaultTableModel modelo = new DefaultTableModel();
+
+
+        public VistaGestionNotas() {
+            initComponents();
+             cargarAlumnos();
+            cargarMaterias();
+            armarCabeceraTabla();
+        }
+        private void cargarAlumnos() {
+        List<Alumno> alumnos = alumnoData.listarAlumnos();
+        for (Alumno a : alumnos) {
+            cbAlumno.addItem(a.getNombre());
+        }
+    }
+        private void cargarMaterias() {
+        List<Materia> materias = materiaData.listarMaterias();
+        for (Materia m : materias) {
+            cbMateria.addItem(m.getNombre());
+        }
+    }
+
+        private void limpiarTabla() {
+        modelo.setRowCount(0);
+    }
+        private void armarCabeceraTabla() {
+   
+        String[] titulos = {"Alumno", "Materia", "Nota"};
+    
+   
+        modelo = new DefaultTableModel(null, titulos) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+        
+            return column == 2; 
+            }
+        };   
+         tablaNotas.setModel(modelo);
+    }
+
+    private void cargarInscripciones() {
+        Alumno alumno = (Alumno) cbAlumno.getSelectedItem();
+        List<Inscripcion> inscripciones = inscripcionData.obtenerInscripcionesPorAlumno(alumno.getIdAlumno());
+        for (Inscripcion i : inscripciones) {
+            modelo.addRow(new Object[]{
+                i.getIdMateria(),
+                i.getNota()
+            });        
+        }
     }
 
     /**
@@ -62,12 +115,32 @@ public class VistaGestionNotas extends javax.swing.JInternalFrame {
         tfNota.setText("jTextField1");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         tablaNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -146,6 +219,55 @@ public class VistaGestionNotas extends javax.swing.JInternalFrame {
     private void cbAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAlumnoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbAlumnoActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        Alumno alumno = (Alumno) cbAlumno.getSelectedItem();
+    Materia materia = (Materia) cbMateria.getSelectedItem();
+
+    try {
+        double nota = Double.parseDouble(tfNota.getText());
+        Inscripcion insc = new Inscripcion(nota, alumno.getIdAlumno(), materia.getIdMateria());
+        inscripcionData.guardarInscripcion(insc);
+        JOptionPane.showMessageDialog(this, "Inscripción guardada correctamente");
+        limpiarTabla();
+        cargarInscripciones();
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Ingrese una nota válida (número)");
+    }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+           int fila = tablaNotas.getSelectedRow();
+    if (fila != -1) {
+        int idAlumno = ((Alumno) cbAlumno.getSelectedItem()).getIdAlumno();
+        int idMateria = ((Double) modelo.getValueAt(fila, 0)).intValue();
+        double nota = Double.parseDouble(tfNota.getText());
+        inscripcionData.actualizarNota(nota, idAlumno, idMateria);
+        JOptionPane.showMessageDialog(this, "Nota actualizada correctamente");
+        limpiarTabla();
+        cargarInscripciones();
+    } else {
+        JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla");
+    }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+       int fila = tablaNotas.getSelectedRow();
+    if (fila != -1) {
+        int idAlumno = ((Alumno) cbAlumno.getSelectedItem()).getIdAlumno();
+        int idMateria = (int) modelo.getValueAt(fila, 0);
+        inscripcionData.borrarInscripcion(idAlumno, idMateria);
+        JOptionPane.showMessageDialog(this, "Inscripción eliminada correctamente");
+        limpiarTabla();
+        cargarInscripciones();
+    } else {
+        JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla");
+    }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
