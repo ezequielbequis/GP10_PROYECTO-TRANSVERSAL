@@ -53,7 +53,7 @@ public class inscripcionData {
             if (rs.next()) {
 
                 insc.setIdInscripto(rs.getInt(1));
-                JOptionPane.showInternalMessageDialog(null, "Inscripción registrada");
+                JOptionPane.showMessageDialog(null, "\"Inscripción registrada\"");
 
             }
             ps.close();

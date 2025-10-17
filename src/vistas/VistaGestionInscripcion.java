@@ -256,19 +256,15 @@ public class VistaGestionInscripcion extends javax.swing.JInternalFrame {
 
         //--- Lista de las materias en la que esta inscripto el alumno ---
         ArrayList<Inscripcion> listaInscripcionesPorAlumno = inscripcionData.obtenerInscripcionesPorAlumno(alumnoId);
-        ArrayList<Materia> obtenerMateriasNoCursadas = inscripcionData.obtenerMateriasNOCursadas(alumnoId);
-        
-        
+        ArrayList<Materia> listaMateriaNoCursada = inscripcionData.obtenerMateriasNOCursadas(alumnoId);
 
-        for (Inscripcion insc : listaInscripcionesPorAlumno) {
-            System.out.println("-- Lista Incripciones por Alumno :" + insc.getIdMateria());
-            for (Materia materia : obtenerMateriasNoCursadas) {
-                System.out.println("-- Lista Materia no cursada por Alumno :" + materia.getIdMateria());
-                if(materia.getIdMateria() != insc.getIdMateria()){
-                    JOptionPane.showMessageDialog(null, "No se puede anular una materia no cursada.");
-                    return;
-                }
+        for (Materia materiaNoCursada : listaMateriaNoCursada) {
+            System.out.println("["+materiaId+"]"+"["+materiaNoCursada.getIdMateria()+"]");
+            if (materiaId == materiaNoCursada.getIdMateria()) {
+                JOptionPane.showMessageDialog(null, "No se puede anular una materia no cursada.");
+                return;
             }
+
         }
 
         //--- Revisa que el alumno este inscripto en la materia, de lo contrario sale cartel+return ---
