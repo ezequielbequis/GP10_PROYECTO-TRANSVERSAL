@@ -26,7 +26,7 @@ public class miConexion {
         this.password = password;
     }
      public miConexion() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       
     }
     
     //Establecer y guardar la conexión.

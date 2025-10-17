@@ -15,16 +15,30 @@ import persistencia.inscripcionData;
 import persistencia.miConexion;
 public class VistaGestionNotas extends javax.swing.JInternalFrame {
 
-        private alumnoData alumnoData = new alumnoData();
-        private materiaData materiaData = new materiaData();
-        private miConexion miconexion = new miConexion();
-        private inscripcionData inscripcionData = new inscripcionData(miconexion);
+        private miConexion conexion; 
+        private alumnoData alumnoData;
+        private inscripcionData inscripcionData;
+        private materiaData materiaData;
         private DefaultTableModel modelo = new DefaultTableModel();
 
 
         public VistaGestionNotas() {
             initComponents();
-             cargarAlumnos();
+            try {
+    
+        conexion = new miConexion("jdbc:mariadb://localhost:3306/gp10_ulp", "root", ""); 
+
+
+        alumnoData = new alumnoData(conexion);
+        inscripcionData = new inscripcionData(conexion);
+        materiaData = new materiaData(conexion);
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + e.getMessage());
+    } 
+            cargarAlumnos();
             cargarMaterias();
             armarCabeceraTabla();
         }
@@ -103,16 +117,11 @@ public class VistaGestionNotas extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Nota:");
 
-        cbAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbAlumno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbAlumnoActionPerformed(evt);
             }
         });
-
-        cbMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        tfNota.setText("jTextField1");
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -173,19 +182,20 @@ public class VistaGestionNotas extends javax.swing.JInternalFrame {
                         .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSalir))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(64, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cbAlumno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel3))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(cbMateria, 0, 171, Short.MAX_VALUE)
+                                .addComponent(tfNota)))))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,7 +220,7 @@ public class VistaGestionNotas extends javax.swing.JInternalFrame {
                     .addComponent(btnSalir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         pack();
