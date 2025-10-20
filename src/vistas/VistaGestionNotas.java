@@ -178,6 +178,7 @@ public class VistaGestionNotas extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setTitle("Gestión de Notas");
         setPreferredSize(new java.awt.Dimension(600, 400));
 
         jLabel1.setText("Alumno:");

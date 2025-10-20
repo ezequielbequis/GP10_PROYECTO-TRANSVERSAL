@@ -56,6 +56,7 @@ public class VistaListarInscripciones extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setTitle("Listar Inscripciones");
         setPreferredSize(new java.awt.Dimension(600, 400));
 
         jcbSeleccionAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
