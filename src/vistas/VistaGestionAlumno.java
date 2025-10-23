@@ -420,9 +420,10 @@ public class VistaGestionAlumno extends javax.swing.JInternalFrame {
                 alumnoActual.setApellido(apellido);
                 alumnoActual.setNombre(nombre);
                 alumnoActual.setFechaNac(fechaNac);
-                //aluData.actualizarAlumno(alumnoActual);
+                aluData.guardarAlumno(alumnoActual);
             }
-                    
+            
+            JOptionPane.showMessageDialog(this, "Alumno cargado correctamente");
         }catch(NumberFormatException nfe){
             JOptionPane.showMessageDialog(this, "Debe ingresar un DNI válido");
         }
