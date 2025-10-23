@@ -53,7 +53,7 @@ public class inscripcionData {
             if (rs.next()) {
 
                 insc.setIdInscripto(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "\"Inscripción registrada\"");
+                // JOptionPane.showMessageDialog(null, "\"Inscripción registrada\"");
 
             }
             ps.close();
@@ -274,5 +274,21 @@ public class inscripcionData {
         }
 
         return alumnosMateria;
+    }
+
+    public boolean existeInscripcion(int idAlumno, int idMateria) {
+        String sql = "SELECT * FROM `inscripcion` WHERE idAlumno = ? AND idMateria = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idAlumno);
+            ps.setInt(2, idMateria);
+
+            ResultSet rs = ps.executeQuery();
+            
+            return rs.next();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripción: " + ex.getMessage());
+        }
+        return false;
     }
 }
