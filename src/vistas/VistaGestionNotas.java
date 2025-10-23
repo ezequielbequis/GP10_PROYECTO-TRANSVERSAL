@@ -325,23 +325,33 @@ public class VistaGestionNotas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-           int fila = tablaNotas.getSelectedRow();
-    if (fila != -1) {
+  
+         try {
+        // Obtener alumno y materia seleccionados
         int idAlumno = ((Alumno) cbAlumno.getSelectedItem()).getIdAlumno();
         int idMateria = ((Materia) cbMateria.getSelectedItem()).getIdMateria();
-        try {
-            
-            String notaStr = tfNota.getText();
-            double nota = Double.parseDouble(notaStr); 
-            inscripcionData.actualizarNota(nota, idAlumno, idMateria); 
-            JOptionPane.showMessageDialog(this, "Nota actualizada correctamente.");
-            limpiarTabla();
-            cargarTablaNotas(); 
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "La nota ingresada no es un número válido.", "Error de formato", JOptionPane.ERROR_MESSAGE);
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla.");
+        
+        // Obtener y validar la nota
+        String notaStr = tfNota.getText();
+        double nota = Double.parseDouble(notaStr);
+
+        // Actualizar en la base de datos
+        inscripcionData.actualizarNota(nota, idAlumno, idMateria);
+
+        JOptionPane.showMessageDialog(this, "Nota actualizada correctamente.");
+        limpiarTabla();
+        cargarTablaNotas();
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, 
+            "La nota ingresada no es un número válido.", 
+            "Error de formato", 
+            JOptionPane.ERROR_MESSAGE);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, 
+            "Ocurrió un error al actualizar la nota: " + e.getMessage(), 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
     }
 
     }//GEN-LAST:event_btnActualizarActionPerformed
